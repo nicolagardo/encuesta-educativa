@@ -1,0 +1,42 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3>Registro</h3>
+                </div>
+                <img src="/images/image/logo.png" class="mx-auto w-25">
+                <div class="card-body">
+                     {{#if errors }}
+                    {{#each errors }}
+                    <p class="alert alert-danger">{{ this.msg }}</p>
+                    {{/each}}
+                    {{/if}}
+                    <form action="/signup" method="POST">
+                        <div class="form-group">
+                            <input type="type" name="first_name" placeholder="Nombre" class="form-control" autofocus>
+                                
+                        </div>
+                        <div class="form-group">
+                            <input type="type" name="last_name" placeholder="Apellido" class="form-control" >
+                        </div>
+                        <div class="form-group">
+                            <input type="type" name="username" placeholder="Nombre de Usuario" class="form-control" >
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" placeholder="Constraseña" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">
+                                Registrar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
