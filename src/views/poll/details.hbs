@@ -1,0 +1,85 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card" style="width: 21rem;">
+                 <div class="card-header">
+                    <h4 id="title">{{data.poll}}</h4>
+                </div>
+                <div class="card-body">
+                     <div class="col-md-10">
+                         <div class="row">
+                            <p>{{data.responses}}</p>
+                            &nbsp;
+                            <p>Respuestas</p>
+                        </div>
+                        <div class="row">
+                            <p>{{votes}}</p>
+                            &nbsp;
+                            <p>Votos</p>
+                        </div>
+                        <div class="row">
+                            <a class="btn btn-info" href="/votes?id={{data.id}}&poll={{data.poll}}">
+                                Realizar votos
+                            </a>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body" id="top_x_div">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['bar'] });
+    google.charts.setOnLoadCallback(drawStuff);
+    function drawStuff(){
+        let responses = "{{responses}}";
+        let array = responses.split(",");
+        var resArray1 = new Array();
+        resArray1[0] = 'Respuesta';;
+        resArray1[1] = 'Voto';
+        let resArray2 = new Array();
+        resArray2[0] = resArray1;
+        let count = 0;
+        let j = 1;
+        resArray1 = new Array();
+        for (let i = 0; i < array.length; i++){
+            if (count == 1){
+                resArray1[count] = parseInt(array[i],10) ;
+                resArray2[j] = resArray1;
+                count = 0;
+                j++;
+                resArray1 = new Array();
+            }else{
+                resArray1[count] = array[i];
+                count++;
+            }
+        }
+        var data = new google.visualization.arrayToDataTable(resArray2);
+         var options = {
+            width: 0,
+            legend: { position: 'none' },
+            chart: {
+                title: "{{data.poll}}",
+                subtitle: 'Sistema de encuestas pdhn'
+            },
+            axes: {
+                x: {
+                    0: { side: 'top', label: 'White to move' } // Top x-axis.
+                }
+            },
+            bar: { groupWidth: "90%" }
+        };
+        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+        console.log(resArray2);
+    }
+
+</script>

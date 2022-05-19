@@ -1,0 +1,42 @@
+{{>slider}}
+<div class="container p-4">
+    <form action="/" method="get">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" id="filtrar" name="filtrar" placeholder="Buscar" class="form-control" />
+            </div>
+            <div class="col-md-1">
+                <div class="row">
+                    <input type="submit" value="Buscar" class="btn btn-info">
+                </div>
+            </div>
+        </div>
+    </form>
+    </br>
+    <div class="row">
+        {{#if data.query }}
+        {{#each data.query}}
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3> {{poll}}</h3>
+                </div>
+                <div class="card-body">
+
+                    <p class="m-2">{{responses}}: respuestas</p>
+
+                    <a class="btn btn-info" href="/details?id={{id}}">
+                        Details
+                    </a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{/if}}
+    </div>
+</div>
+<div class="text-center">
+    {{{data.pagi_info}}}
+    <br>
+    {{{data.pagi_navegacion}}}
+</div>

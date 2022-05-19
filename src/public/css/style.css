@@ -1,0 +1,33 @@
+.imglogo {
+    max-width: 100%;
+    margin-right: 0.2cm;
+ }
+ .navbar-brand {
+    max-width: 15%;
+    margin-right: 4cm;
+}
+.border-bottom {
+    border-bottom: 3px solid #d6d5d5  !important;
+}
+#menuNavbar{
+    width: 100%;
+}
+.imgSlider {
+    max-width: 60%;
+}
+.sheetSlider {
+    background-color: #ffffff;
+    text-align: center;
+}
+.sh__meta span, .sh__meta h4 {
+    color: rgb(85, 85, 85);
+}
+@media (min-width: 768px){
+    .imglogo {
+        max-width: 30%;
+    }
+}
+.sh__item{
+    margin-top: 2cm;
+
+}

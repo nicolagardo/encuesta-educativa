@@ -1,0 +1,36 @@
+<div class="container p-4">
+    <div class="card" style="width: 21rem;">
+        <div class="card-header">
+            <h4 id="title">{{poll}}</h4>
+        </div>
+        <div class="card-body">
+            <div class="col-md-10">
+                {{#if errors }}
+                {{#each errors }}
+                <p class="alert alert-danger">{{ this.msg }}</p>
+                {{/each}}
+                {{/if}}
+                <form action="/votes" method="POST">
+                    {{#each responses}}
+                    <div class="row">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="response" id="{{id}}" value="{{id}}">
+                            <label class="form-check-label" for="{{id}}">
+                                {{response}}
+                            </label>
+                        </div>
+                    </div>
+                    {{/each}}
+                    <br>
+                    <div class="form-group">
+                        {{#if value }}
+                        <input type="submit" value="Votar" class="btn btn-success btn-block">
+                        {{else}}
+                         <input type="submit" value="Votar" class="btn btn-success btn-block" disabled >
+                        {{/if}}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

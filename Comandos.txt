@@ -1,0 +1,35 @@
+//Comando para crer el archoivo package.json
+npm init --yes
+//Comandos para instalar los paquetes
+npm i express
+//Para el desarrollo de paltillas
+express-handlebars
+//Pra el manejo se sesiones
+express-session
+//Para conexion a mysql
+mysql
+Para el manejo de sesiones  en la base de datos de mysql
+express-mysql-session
+//para el majo de peticones que llegan al servidor 
+morgan
+//Modulo para el manejo de cifrar ls contrase�as de los usuarios
+bcryptjs
+//Modulo para la  autenticacion del usuario
+passport passport-local
+//Modul para el manejo de fechas
+timeago.js
+//Modulo para el maje de mensajes entre las vistas
+connect-flash
+//Modulo para validar los datos que nos envia el usuario desde el lado del cliente
+express-validator
+//Modulo de desarrollo 
+npm i nodemon -D
+//Comando para crear el directoriuo de carpetas
+mkdir lib,public,views,routes
+//Comando para agregar un paginador
+npm i express-paginatorjs
+//Comando para ejecutar la app
+npm run dev
+
+//limpiar la consola 
+clear

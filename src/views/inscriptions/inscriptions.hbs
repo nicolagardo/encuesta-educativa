@@ -1,0 +1,84 @@
+<div class="container p-4">
+    <form action="/inscriptions" method="get">
+        <div class="row">
+             <div class="col-md-4">
+                <input type="text" id="filtrar" name="filtrar" placeholder="Buscar" class="form-control" />
+            </div>
+            <div class="col-md-1">
+                <div class="row">
+                    <input type="submit" value="Buscar" class="btn btn-success">
+                </div>
+            </div>
+        </div>
+    </form>
+     <br>
+    <div class="row">
+     {{#each data.query}}
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3> {{poll}}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="col-md-10">
+                        <div class="row">
+                            <p>{{responses}}</p>
+                            &nbsp;
+                            <p>Respuestas</p>
+                        </div>
+                        <div class="row">
+                            <p>Voto: </p>
+                            &nbsp;
+                            <p>{{response}}</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <a class="btn btn-info" href="/details?id={{id}}">
+                                    Details
+                                </a>
+                            </div>
+                             &nbsp;
+                            <div class="col-md-5">
+                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                    data-target="#deleteModal" onclick="deletePoll('{{id_in}}','{{poll}}')">Delete</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+<div class="text-center">
+    {{{data.pagi_info}}}
+    <br>
+    {{{data.pagi_navegacion}}}
+</div>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿Esta seguro de eliminar el voto de la encuesta?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3 id="titlePoll"></h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a id="idPoll" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function deletePoll(id, poll) {
+        document.getElementById("titlePoll").innerHTML = poll;
+        document.getElementById('idPoll').setAttribute('href', '/deleteVote/' + id);
+    }
+</script>
