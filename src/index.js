@@ -45,9 +45,9 @@ app.use(require('./routes/inscriptionsController'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 // Starting
-const PORT = app.get('port')
-app.listen(PORT, () => {
+const port = process.env.PORT ||8081;
+app.listen(port, () => {
     console.log('Server is in port', app.get('port'));
     
-    console.log(`http://localhost:${PORT}`);
+    console.log(`http://localhost:${port}`);
   });
