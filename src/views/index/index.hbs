@@ -1,10 +1,33 @@
+<style> 
+    body{
+        background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCfDV7Endtbe-UIWpvIzfCuV8AcX1vBe29oA&usqp=CAU");
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
+		background-attachment: fixed;
+    }
+    # fondo{
+        background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCfDV7Endtbe-UIWpvIzfCuV8AcX1vBe29oA&usqp=CAU");
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
+		background-attachment: fixed;
+
+    }
+</style>
+
+
+<body>
+   
+</body>
 {{>slider}}
-<div class="container p-4">
+<div class="container p-4" id="fondo">
     <form action="/" method="get">
         <div class="row">
             <div class="col-md-4">
                 <input type="text" id="filtrar" name="filtrar" placeholder="Buscar" class="form-control" />
             </div>
+
             <div class="col-md-1">
                 <div class="row">
                     <input type="submit" value="Buscar" class="btn btn-info">
@@ -26,7 +49,7 @@
                     <p class="m-2">{{responses}}: respuestas</p>
 
                     <a class="btn btn-info" href="/details?id={{id}}">
-                        Details
+                        Detalles
                     </a>
                 </div>
             </div>

@@ -23,7 +23,7 @@ router.post('/signup', [
        next(); 
     }
 },passport.authenticate('local.signup', {
-    successRedirect: '/listPoll',
+    successRedirect: '/listPoll', /*cuando incia sesion direcciona a lista de encuestas del usuario*/
     failureRedirect: '/signup',
     
 }));
