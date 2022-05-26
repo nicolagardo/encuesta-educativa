@@ -6,7 +6,7 @@ const { paginator } = require('../lib/paginator');
 const { check, validationResult } = require('express-validator');
 var url = require('url');
 
-router.get('/listPoll', isLoggedIn, async (req, res) => {
+router.get('/listPoll', async (req, res) => {
   let listPoll;
   let data = {};
   var query = url.parse(req.url, true).query;
@@ -102,14 +102,15 @@ router.get('/details', async (req, res) => {
   var data = listPoll[0];
   res.render('poll/details',{data,responses,votes});
 });
-var responses;
+//const responses = pool.query("SELECT * FROM responses WHERE polls_id =?", [query.id]);
+
 var poll;
 var poll_id;
-router.get('/votes', isLoggedIn, async (req, res) =>{
-  var query = url.parse(req.url, true).query;
+router.get('/votes', async (req, res) =>{
+  const query = url.parse(req.url, true).query;
   poll_id = query.id;
-  responses = await pool.query("SELECT * FROM responses WHERE polls_id =?", [query.id]);
-  let inscription = await pool.query("SELECT * FROM inscriptions WHERE poll_id =? AND user_id =?", [poll_id,req.user.id]);
+  const responses = await pool.query("SELECT * FROM responses WHERE polls_id =?", [query.id]);
+  let inscription = await pool.query("SELECT * FROM inscriptions WHERE poll_id =?", [query.id]);
   let value  = true;
   if (0 < inscription.length){
     value  = false;
@@ -120,8 +121,12 @@ router.get('/votes', isLoggedIn, async (req, res) =>{
 });
 router.post('/votes',[
   check('response').not().isEmpty().withMessage('Select one of the options')
-], isLoggedIn, async (req, res) =>{
+], async (req, res) =>{
   const errors = validationResult(req);
+  const query = url.parse(req.url, true).query;
+
+  const responses = await pool.query("SELECT * FROM responses WHERE polls_id =?", [query.id]);
+
   if (!errors.isEmpty()) {
     res.render('poll/votes', {responses,poll,errors:  errors.array() });
   }else{
@@ -139,9 +144,10 @@ router.post('/votes',[
             throw err;
           });
         }
+        let id =9;
         let res = {
           poll_id: poll_id,
-          user_id: req.user.id,
+          user_id: id,
           response: respon,
           response_id: response_id,
           date: new Date()
