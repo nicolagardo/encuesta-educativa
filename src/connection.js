@@ -2,6 +2,7 @@ const mysql = require('mysql');
 const { database } = require('./config');
 const { promisify } = require('util');
 
+
 const pool = mysql.createConnection(database);
 
 pool.connect((err) => {

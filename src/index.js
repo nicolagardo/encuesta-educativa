@@ -5,12 +5,13 @@ const passport = require('passport');
 const MySQLStore = require('express-mysql-session');
 const session = require('express-session');
 const { database } = require('./config');
+require("dotenv").config()
 
 // Intializations
 const app = express();
 require('./lib/passport');
 // Settings
-app.set('port', process.env.PORT || 8081);
+//app.set('port', process.env.PORT || 8081);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({
   defaultLayout: 'main',
@@ -45,7 +46,8 @@ app.use(require('./routes/inscriptionsController'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 // Starting
-const port = process.env.PORT ||8081;
+//const port = process.env.PORT ||8081;
+const port = process.env.PORT;
 app.listen(port, () => {
     console.log('Server is in port', app.get('port'));
     
