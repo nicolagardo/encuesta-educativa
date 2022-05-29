@@ -5,10 +5,25 @@ const passport = require('passport');
 const MySQLStore = require('express-mysql-session');
 const session = require('express-session');
 const { database } = require('./config');
-require("dotenv").config()
+
+
+
+
+//ENV
+
+require('dotenv').config();
 
 // Intializations
 const app = express();
+// const port = require('')
+const http = require('http');
+const res = require('express/lib/response');
+const server = http.createServer(app)
+
+//TODO:  socket
+const io = 
+
+
 require('./lib/passport');
 // Settings
 //app.set('port', process.env.PORT || 8081);
@@ -46,10 +61,19 @@ app.use(require('./routes/inscriptionsController'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 // Starting
-//const port = process.env.PORT ||8081;
-const port = process.env.PORT;
-app.listen(port, () => {
-    console.log('Server is in port', app.get('port'));
-    
-    console.log(`http://localhost:${port}`);
-  });
+const port = process.env.PORT ||8080
+// const port = 8080
+// app.listen(port, () => {
+//     console.log('Server is in port', app.get('port'));
+
+//     console.log(`http://localhost:${port}`);
+//   });
+
+server.listen(port, ()=> {
+  console.log('Servidor corriendo');
+  console.log(`http://localhost:${port}`);
+})
+app.get('/', (req, res) => {
+  // res.send('Hola')
+  console.log('En el Home');
+})
