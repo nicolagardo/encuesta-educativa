@@ -2,10 +2,10 @@
   "name": "encuestas-pdhn",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node server.js",
+    
     "build": "",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
@@ -28,6 +28,6 @@
     "socket.io": "^4.5.1"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    
   }
 }
