@@ -9,7 +9,9 @@
   },
 
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js", 
+    "build": "ng build",
+    "heroku-postbuild": "ng build --prod"
   },
   "license": "ISC",
   "dependencies": {
