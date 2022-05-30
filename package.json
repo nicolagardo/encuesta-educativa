@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "react-scripts start",
-    "start": "serve -s build",
-    "build": "react-scripts build",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build": "",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build"
-    },
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -25,7 +25,6 @@
     "mysql": "^2.17.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "serve": "^13.0.2",
     "socket.io": "^4.5.1"
   },
   "devDependencies": {
