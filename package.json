@@ -2,16 +2,12 @@
   "name": "encuestas-pdhn",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
   "engines": {
-    "node": "16.14.2",
-    "npm": "8.5.0"
+    "node": "16.14.2"
   },
 
   "scripts": {
-    "start": "node server.js", 
-    "build": "ng build",
-    "heroku-postbuild": "ng build --prod"
+    "start": "node server.js"
   },
   "license": "ISC",
   "dependencies": {
