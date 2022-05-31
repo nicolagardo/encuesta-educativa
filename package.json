@@ -7,13 +7,13 @@
   },
 
   "scripts": {
-    "start": "node server.js"
+    "start": "node src/server.js"
   },
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.1",
-    "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
     "express-mysql-session": "^2.1.0",
     "express-session": "^1.16.2",

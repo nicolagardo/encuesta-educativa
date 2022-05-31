@@ -4,7 +4,7 @@ const path = require('path');
 const passport = require('passport');
 const MySQLStore = require('express-mysql-session');
 const session = require('express-session');
-const { database } = require('./src/config');
+const { database } = require('./config');
 
 
 
@@ -24,10 +24,10 @@ const server = http.createServer(app)
 
 
 
-require('./src/lib/passport');
+require('./lib/passport');
 // Settings
 //app.set('port', process.env.PORT || 8081);
-app.set('views', path.join(__dirname, 'src/views'));
+app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({
   defaultLayout: 'main',
   layoutsDir: path.join(app.get('views'), 'layouts'),
@@ -38,7 +38,7 @@ app.set('view engine', '.hbs');
 
 // Middlewares
 app.use(session({
-  secret: 'pdhnencuestas',
+  secret: 'miniencuestas',
   resave: false,
   saveUninitialized: false,
   store: new MySQLStore(database)
@@ -54,10 +54,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(require('./src/routes/indexController'));
-app.use(require('./src/routes/authController'));
-app.use(require('./src/routes/pollController'));
-app.use(require('./src/routes/inscriptionsController'));
+app.use(require('./routes/indexController'));
+app.use(require('./routes/authController'));
+app.use(require('./routes/pollController'));
+app.use(require('./routes/inscriptionsController'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 // Starting
@@ -69,11 +69,8 @@ const port = process.env.PORT ||8080
 //     console.log(`http://localhost:${port}`);
 //   });
 
-server.listen(port, ()=> {
+server.listen(port, (req, res)=> {
   console.log('Servidor corriendo');
   console.log(`http://localhost:${port}`);
-})
-app.get('/', (req, res) => {
-  // res.send('Hola')
-  console.log('En el Home');
+
 })

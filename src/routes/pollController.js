@@ -41,7 +41,7 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
     user_id: req.user.id,
     date: new Date()
   };
-  console.log(polls);
+  console.log("POLLS: ",polls);
   await pool.beginTransaction((err) => {
     if (err) { throw err; }
     pool.query('INSERT INTO polls SET ?', polls, (err, result) => {
@@ -50,8 +50,11 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
           throw err;
         });
       }
-      console.log(result);
+      console.log("result ",result);
+
       var polls_id = result.insertId;
+      console.log("polls_id ",polls_id);
+      console.log("response ",response);
       response.forEach(element => {
         let res = {
           response: element,
