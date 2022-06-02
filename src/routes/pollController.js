@@ -44,11 +44,7 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
     multiplechoice: multipleC
 
   };
-<<<<<<< HEAD
-  console.log("POLLS: ",polls);
-=======
   console.log("dia:", polls.date.getDay(), polls.date.getMonth(), polls.date.getDate());
->>>>>>> 0d7973f69a4b79ff98829c405d9d9970274293f8
   await pool.beginTransaction((err) => {
 
     if (err) { throw err; }
@@ -117,15 +113,9 @@ router.get('/details', async (req, res) => {
   var campos = "polls.id,polls.poll,polls.responses,polls.user_id,polls.date,polls.multiplechoice"
     + ",responses.response,responses.votes";
   const listPoll = await pool.query("SELECT " + campos + " FROM polls Inner Join responses ON " + condicion + " WHERE polls.id =?", [query.id]);
-<<<<<<< HEAD
-  console.log("[query.id]: ",[query.id]);
-  console.log("listPoll: ",listPoll);
-  
-=======
   //let multiple= await pool.query("SELECT multiplechoice FROM polls WHERE polls.id =?", [query.id]);
   console.log("query.id",query);
 
->>>>>>> 0d7973f69a4b79ff98829c405d9d9970274293f8
   let responses2 = new Array();
   let votes = 0;
   for (let i = 0; i < listPoll.length; i++) {
@@ -150,21 +140,6 @@ router.get('/details', async (req, res) => {
 var responses;
 var poll;
 var poll_id;
-<<<<<<< HEAD
-router.get('/votes', async (req, res) =>{
-  console.log("req: ",req);
-  const query = url.parse(req.url, true).query;
-  poll_id = query.id;
-  const responses = await pool.query("SELECT * FROM responses WHERE polls_id =?", [query.id]);
-  let inscription = await pool.query("SELECT * FROM inscriptions WHERE poll_id =?", [query.id]);
-  // console.log("query: ",query);
-  console.log("us id: ",req.user.id);
-  const listPollUserId = req.user.id;
-  console.log("RESPONSESSS: ", responses);
-  let value  = true;
-  if (0 < inscription.length){
-    value  = false;
-=======
 router.get('/votes', isLoggedIn, async (req, res) => {
   var query = url.parse(req.url, true).query;
   poll_id = query.id;
@@ -176,7 +151,6 @@ router.get('/votes', isLoggedIn, async (req, res) => {
   let value = true;
   if (0 < inscription.length) {
     value = false;
->>>>>>> 0d7973f69a4b79ff98829c405d9d9970274293f8
   }
   
   poll = query.poll;
@@ -211,26 +185,13 @@ router.post('/votes', [
             throw err;
           });
         }
-<<<<<<< HEAD
-        //TODO:id
-        let id = 8;
-        console.log("***************DATA+++++++++++++: ");
-        console.log("***************DATA+++++++++++++: ",data);
-        console.log("RESPON: ", respon);
-=======
->>>>>>> 0d7973f69a4b79ff98829c405d9d9970274293f8
         let res = {
           poll_id: poll_id,
           user_id: req.user.id,
           response: respon,
           response_id: response_id,
           date: new Date()
-<<<<<<< HEAD
-        }; 
-        console.log("+++++++++Que user_id intenta insertar:", res.user_id);
-=======
         };
->>>>>>> 0d7973f69a4b79ff98829c405d9d9970274293f8
         pool.query('INSERT INTO inscriptions SET ?', res, (err, result) => {
           if (err) {
             pool.rollback(() => {
