@@ -9,9 +9,8 @@ router.get('/',async(req,res)=>{
     let data = {};
     var query = url.parse(req.url, true).query;
     if (undefined == query.filtrar){
-        data = {
-            pagi_info: "No hay datos que mostrar",
-          };    }else{
+        listPoll = "No hay datos que mostrar"
+    }else{
         listPoll = await pool.query('SELECT * FROM polls WHERE poll LIKE ?', ['%' +query.filtrar+ '%']);
         console.log("LiP:",listPoll);
         if (listPoll.length<=0) {
@@ -22,7 +21,7 @@ router.get('/',async(req,res)=>{
         }
     }
     if (0 < listPoll.length){
-        data = paginator(listPoll, req.query.pagina, 3, "/", "http://localhost:8000");
+        data = paginator(listPoll, req.query.pagina, 3, "/", "");
     }else{
         data = {
             pagi_info: "No hay datos que mostrar",
