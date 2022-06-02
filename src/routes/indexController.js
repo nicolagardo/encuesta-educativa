@@ -9,8 +9,9 @@ router.get('/',async(req,res)=>{
     let data = {};
     var query = url.parse(req.url, true).query;
     if (undefined == query.filtrar){
-        listPoll = await pool.query('SELECT * FROM polls', [0]);
-    }else{
+        data = {
+            pagi_info: "No hay datos que mostrar",
+          };    }else{
         listPoll = await pool.query('SELECT * FROM polls WHERE poll LIKE ?', ['%' +query.filtrar+ '%']);
         console.log("LiP:",listPoll);
         if (listPoll.length<=0) {
