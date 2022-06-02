@@ -14,7 +14,7 @@ router.get('/',async(req,res)=>{
         listPoll = await pool.query('SELECT * FROM polls WHERE poll LIKE ?', ['%' +query.filtrar+ '%']);
     }
     if (0 < listPoll.length){
-        data = paginator(listPoll, req.query.pagina, 3, "/", "http://localhost:8080");
+        data = paginator(listPoll, req.query.pagina, 3, "/", "http://localhost:8000");
     }else{
         data = {
             pagi_info: "No hay datos que mostrar",

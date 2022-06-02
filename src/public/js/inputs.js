@@ -6,7 +6,7 @@ $('#add_field').click(
         if (x < campos_max) {
             $('#listas').append('<div class="row">\
                                 <div class="col-md-10">\
-                                   <input type="text" name="response" placeholder="Respuesta '+x+'"  class="form-control input" required>\
+                                   <input type="text" name="response" placeholder="Opción '+x+'"  class="form-control input" required>\
                                 </div>\
                                 <a href="#" class="remover_campo"><img src="/images/icons/delete.png" ></a>\
                             </div>');

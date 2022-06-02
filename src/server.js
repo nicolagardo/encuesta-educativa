@@ -21,6 +21,20 @@ const res = require('express/lib/response');
 const server = http.createServer(app)
 
 //TODO:  socket
+const {Server} = require('socket.io')
+const io = new Server(server)
+
+io.on('connection', socket => {
+    console.log('Un usuario se ha conectado');
+    console.log("socket: ",socket.id);
+    // socket.on('chat', msg => {
+    //     console.log(`Mensaje: ${msg}`);
+
+    // })
+//     socket.on('chat', msg => {
+//         io.emit('chat', msg)
+    // }) 
+  })
 
 
 
@@ -34,6 +48,9 @@ app.engine('.hbs', exphbs({
   partialsDir: path.join(app.get('views'), 'partials'),
   extname: '.hbs',
 }));
+app.get('/home', (req, res) => {
+  res.sendFile(`${__dirname}/index.html`)
+})
 app.set('view engine', '.hbs');
 
 // Middlewares

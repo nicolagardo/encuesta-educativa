@@ -32,7 +32,7 @@ router.get('/createPoll', isLoggedIn, async (req, res) => {
 });
 
 router.post('/createPoll', isLoggedIn, async (req, res) => {
-  //console.log(req.body);
+  console.log(" QUE JORACA ES ESTO: ",req.body);
   const { poll, response } = req.body;
   let responses = response.length;
   let polls = {
@@ -61,6 +61,7 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
           votes: 0,
           polls_id: polls_id
         };
+        console.log("RES: ",res);
         pool.query('INSERT INTO responses SET ?', res, (err, result) => {
           if (err) {
             pool.rollback(() => {
@@ -89,7 +90,9 @@ router.get('/details', async (req, res) => {
   var campos = "polls.id,polls.poll,polls.responses,polls.user_id,polls.date"
     + ",responses.response,responses.votes";
   const listPoll = await pool.query("SELECT " + campos + " FROM polls Inner Join responses ON " + condicion + " WHERE polls.id =?", [query.id]);
-
+  console.log("[query.id]: ",[query.id]);
+  console.log("listPoll: ",listPoll);
+  
   let responses2 = new Array();
   let votes = 0;
   for (let i = 0; i < listPoll.length; i++) {
@@ -110,15 +113,20 @@ router.get('/details', async (req, res) => {
 var poll;
 var poll_id;
 router.get('/votes', async (req, res) =>{
+  console.log("req: ",req);
   const query = url.parse(req.url, true).query;
   poll_id = query.id;
   const responses = await pool.query("SELECT * FROM responses WHERE polls_id =?", [query.id]);
   let inscription = await pool.query("SELECT * FROM inscriptions WHERE poll_id =?", [query.id]);
+  // console.log("query: ",query);
+  console.log("us id: ",req.user.id);
+  const listPollUserId = req.user.id;
+  console.log("RESPONSESSS: ", responses);
   let value  = true;
   if (0 < inscription.length){
     value  = false;
   }
-  console.log(responses);
+  
   poll = query.poll;
   res.render('poll/votes',{responses,poll,value});  
 });
@@ -134,7 +142,9 @@ router.post('/votes',[
     res.render('poll/votes', {responses,poll,errors:  errors.array() });
   }else{
     const { response } = req.body;
+    console.log("ESTE response que tiene: ", response);
     let responses = await pool.query("SELECT * FROM responses WHERE id =?", [response]);
+    console.log("responses!! ", responses);
     let vote = responses[0].votes;
     var respon = responses[0].response;
     vote++;
@@ -147,7 +157,11 @@ router.post('/votes',[
             throw err;
           });
         }
-        let id =9;
+        //TODO:id
+        let id = 8;
+        console.log("***************DATA+++++++++++++: ");
+        console.log("***************DATA+++++++++++++: ",data);
+        console.log("RESPON: ", respon);
         let res = {
           poll_id: poll_id,
           user_id: id,
@@ -155,6 +169,7 @@ router.post('/votes',[
           response_id: response_id,
           date: new Date()
         }; 
+        console.log("+++++++++Que user_id intenta insertar:", res.user_id);
         pool.query('INSERT INTO inscriptions SET ?', res, (err, result) => {
           if (err) {
             pool.rollback(() => {
@@ -173,7 +188,7 @@ router.post('/votes',[
       });
     });
   }
-  console.log(req.body);
+  console.log("QUE ES ESTOooo",req.body);
 
 });
 router.get('/delete/:id', async (req, res) =>{

@@ -13,7 +13,7 @@
                             <p>Respuestas</p>
                         </div>
                         <div class="row">
-                            <p>{{votes}}</p>
+                            <p votos>{{votes}}</p>
                             &nbsp;
                             <p>Votos</p>
                         </div>
@@ -48,10 +48,33 @@
 
         </div>
     </div>
+        <script src="/socket.io/socket.io.js"></script>
+
 </div>
 
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+ <script>
+        let socket =io()
+        /*const form = document.querySelector('form')
+        const input = document.querySelector('input')
+        let mensajes = document.querySelector('ul')
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            if(input.value){
+                socket.emit('chat', input.value)
+                input.value = ''
+            }
+        })
+*/
+        //socket.on('chat', msg => {
+        //    let item = document.createElement('li')
+        //    item.textContent = msg
+        //    mensajes.appendChild(item)
+        //    window.scrollto(0, document.body.scrollHeight)
+        //})
+    </script>
 
 <script type="text/javascript">
     google.charts.load('current', { 'packages': ['bar'] });
@@ -181,7 +204,8 @@
         chart.draw(data, options);
         //var chart = new google.charts.Bar(document.getElementById('piechart_3d'));
         //chart.draw(data, google.charts.Bar.convertOptions(options));
-        console.log(resArray2);
+        console.log("QUE ES ESTO ",resArray2);
+        console.log('responses: ',responses);
       }
     </script>
   
