@@ -7,12 +7,20 @@
   },
   "scripts": {
     "start": "node src/index.js",
+<<<<<<< HEAD
     "dev": "nodemon src/",
     "test": "echo \"Error: no test specified\" && exit 1"
+=======
+    "dev": "nodemon src/index.js"
+>>>>>>> 0d7973f69a4b79ff98829c405d9d9970274293f8
   },
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "express": "^4.18.1",
+=======
+    "alert": "^5.0.11",
+>>>>>>> 0d7973f69a4b79ff98829c405d9d9970274293f8
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.1",
     "express-handlebars": "^3.1.0",

@@ -1,11 +1,18 @@
 module.exports ={
     database:{
         connectionLimit: 10,
+<<<<<<< HEAD
         host: 'mysql-nicodevs.alwaysdata.net',
         port: '3306',
         user: 'nicodevs',
         password: '3pZ..52kB2H6hBc',
         database: 'nicodevs_miniencuestas'
+=======
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'encuestas'
+>>>>>>> 0d7973f69a4b79ff98829c405d9d9970274293f8
     }
 }
 

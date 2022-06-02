@@ -1,6 +1,6 @@
 <div class="container p-4">
-    
-    
+
+
     <div class="card" style="width: 21rem;">
         <div class="card-header">
             <h4 id="title">{{poll}}</h4>
@@ -12,35 +12,32 @@
                 <p class="alert alert-danger">{{ this.msg }}</p>
                 {{/each}}
                 {{/if}}
-                <form action="/votes" method="POST">
-                
-               
-                
-                    {{#each responses}}
+                <form action="/multiplechoice" method="POST">
                    
+
+
+                    {{#each responses}}
                     <div class="row">
                         <div class="form-check">
-<<<<<<< HEAD
                             <input class="form-check-input" type="checkbox" name="response" id="{{id}}" value="{{id}}">
-=======
-                            <input class="form-check-input" type="radio" name="response" id="{{id}}" value="{{id}}" >
->>>>>>> 0d7973f69a4b79ff98829c405d9d9970274293f8
                             <label class="form-check-label" for="{{id}}">
                                 {{response}}
                             </label>
                         </div>
                     </div>
+
+
                     {{/each}}
-                   
-                    
-                  
+
+
+
                     <br>
                     <div class="form-group">
                         {{#if value }}
                         <input type="submit" value="Votar" class="btn btn-success btn-block">
                         {{else}}
-                         <input type="submit" value="Votar" class="btn btn-success btn-block" >
-                        
+                        <input type="submit" value="Votar" class="btn btn-success btn-block">
+
                         {{/if}}
                     </div>
                 </form>

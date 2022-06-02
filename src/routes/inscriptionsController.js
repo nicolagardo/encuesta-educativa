@@ -3,6 +3,7 @@ const router = express.Router();
 const pool = require('../connection');
 const { paginator } = require('../lib/paginator');
 var url = require('url');
+const { response } = require('express');
 
 router.get('/inscriptions', async (req, res) => {
     var condicion = "polls.id=inscriptions.poll_id";
@@ -28,7 +29,12 @@ router.get('/deleteVote/:id', async (req, res) => {
     const { id } = req.params;
     await pool.beginTransaction(async (err) => {
         let inscription = await pool.query("SELECT * FROM inscriptions WHERE id_in =?", [id]);
+        /*let texto="";
+        response_id.forEach(element => {
+            texto+="id="+element;
+        });*/
         let responses = await pool.query("SELECT * FROM responses WHERE id =?", [inscription[0].response_id]);
+        //let responses = await pool.query("SELECT * FROM responses WHERE id =?",texto);
         let votes = responses[0].votes;
         votes--;
         let data = [votes, responses[0].id];

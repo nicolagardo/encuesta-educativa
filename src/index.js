@@ -40,7 +40,11 @@ io.on('connection', socket => {
 
 require('./lib/passport');
 // Settings
+<<<<<<< HEAD
 //app.set('port', process.env.PORT || 8081);
+=======
+app.set('port', process.env.PORT || 8080);
+>>>>>>> 0d7973f69a4b79ff98829c405d9d9970274293f8
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({
   defaultLayout: 'main',
@@ -78,6 +82,7 @@ app.use(require('./routes/inscriptionsController'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 // Starting
+<<<<<<< HEAD
 const port = process.env.PORT ||8080
 // const port = 8080
 // app.listen(port, () => {
@@ -91,3 +96,11 @@ server.listen(port, (req, res)=> {
   console.log(`http://localhost:${port}`);
 
 })
+=======
+const port = process.env.PORT ||8080;
+app.listen(port, () => {
+    console.log('Server is in port', app.get('port'));
+    
+    console.log(`http://localhost:${port}`);
+  });
+>>>>>>> 0d7973f69a4b79ff98829c405d9d9970274293f8
