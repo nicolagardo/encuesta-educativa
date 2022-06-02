@@ -136,14 +136,14 @@ router.get('/details', async (req, res) => {
 var responses;
 var poll;
 var poll_id;
-router.get('/votes', isLoggedIn, async (req, res) => {
+router.get('/votes', async (req, res) => {
   var query = url.parse(req.url, true).query;
   poll_id = query.id;
   let multiple = query.multiple;
 
   //console.log("valor:",multiple);
   responses = await pool.query("SELECT * FROM responses WHERE polls_id =?", [query.id]);
-  let inscription = await pool.query("SELECT * FROM inscriptions WHERE poll_id =? AND user_id =?", [poll_id, req.user.id]);
+  let inscription = await pool.query("SELECT * FROM inscriptions WHERE poll_id =? ", [poll_id]);
   let value = true;
   if (0 < inscription.length) {
     value = false;
@@ -160,7 +160,7 @@ router.get('/votes', isLoggedIn, async (req, res) => {
 });
 router.post('/votes', [
   check('response').not().isEmpty().withMessage('Select one of the options')
-], isLoggedIn, async (req, res) => {
+], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     res.render('poll/votes', { responses, poll, errors: errors.array() });
@@ -181,7 +181,6 @@ router.post('/votes', [
         }
         let res = {
           poll_id: poll_id,
-          user_id: req.user.id,
           response: respon,
           response_id: response_id,
           date: new Date()
