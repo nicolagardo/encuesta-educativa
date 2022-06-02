@@ -18,7 +18,8 @@
                             <p>Votos</p>
                         </div>
                         <div class="row">
-                            <a class="btn btn-info" href="/votes?id={{data.id}}&poll={{data.poll}}">
+                            <a class="btn btn-info"
+                                href="/votes?id={{data.id}}&poll={{data.poll}}&multiple={{multiple}}">
                                 Realizar votos
                             </a>
                         </div>
@@ -28,23 +29,34 @@
         </div>
         <div class="col-sm">
             <div class="card">
-                <button>Grafico Histograma</button>
-                <div class="card-body" id="top_x_div">
 
+                
+                    <button onclick="ocultar('top_x_div')">Grafico Histograma</button>
+                
+
+            </div>
+
+            <div class="card">
+
+                <div class="card-body" id="top_x_div" style="width: 500px; height: 300px;">
+                   
                 </div>
 
             </div>
             <div class="card">
-                <button>Grafico de Torta 3D</button>
-                <div id="piechart_3d" style="width: 500px; height: 300px;"></div>
+                <button onclick="ocultar('piechart_3d')">Grafico de Torta 3D</button>
+                <div id="piechart_3d" style="width: 500px; height: 300px; display: none"></div>
 
             </div>
             <div class="card">
-                <button>Grafico de dona</button>
-                <div id="donutchart" style="width: 500px; height: 300px;"></div>
+                <button onclick="ocultar('donutchart')">Grafico de dona</button>
+                <div id="donutchart" style="width: 500px; height: 300px;display: none"></div>
 
             </div>
-            
+
+
+
+
 
         </div>
     </div>
@@ -101,12 +113,14 @@
         chart.draw(data, google.charts.Bar.convertOptions(options));
         console.log(resArray2);
     }
-    
-      //dona
-    google.charts.load("current", {packages:["corechart"]});
+
+    //dona
+    google.charts.load('current', { 'packages': ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-          let responses = "{{responses}}";
+
+
+    function drawChart() {
+        let responses = "{{responses}}";
         let array = responses.split(",");
         var resArray1 = new Array();
         resArray1[0] = 'Respuesta';;
@@ -128,23 +142,28 @@
                 count++;
             }
         }
-        var data = new google.visualization.arrayToDataTable(resArray2);
-        
-       
 
+        var data = new google.visualization.arrayToDataTable(resArray2);
         var options = {
-          title: 'Grafico de Dona',
-          pieHole: 0.4,
+            pieHole: 0.5,
+            pieSliceTextStyle: {
+                color: 'black',
+            },
+            legend: 'none'
         };
+
+
+
 
         var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
         chart.draw(data, options);
-      }
-      //torta 3d
-      
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
+
+    }
+    //torta 3d
+
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(pieChart);
+    function pieChart() {
         let responses = "{{responses}}";
         let array = responses.split(",");
         var resArray1 = new Array();
@@ -168,11 +187,11 @@
             }
         }
         var data = new google.visualization.arrayToDataTable(resArray2);
-        
+
 
         var options = {
-          title: 'Grafico de torta 3D',
-          is3D: true,
+            title: 'Grafico de torta 3D',
+            is3D: true,
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
@@ -180,7 +199,17 @@
         //var chart = new google.charts.Bar(document.getElementById('piechart_3d'));
         //chart.draw(data, google.charts.Bar.convertOptions(options));
         console.log(resArray2);
-      }
-    </script>
-  
-    
+    }
+    function ocultar(elemento) {
+        var x = document.getElementById(elemento);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+
+
+
+</script>

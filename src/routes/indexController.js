@@ -12,6 +12,13 @@ router.get('/',async(req,res)=>{
         listPoll = await pool.query('SELECT * FROM polls', [0]);
     }else{
         listPoll = await pool.query('SELECT * FROM polls WHERE poll LIKE ?', ['%' +query.filtrar+ '%']);
+        console.log("LiP:",listPoll);
+        if (listPoll.length<=0) {
+            console.log("funciona");
+            listPoll = await pool.query('SELECT * from polls where concat_ws(\'\', id,WEEKDAY(date)+1, extract(month from date),extract(day from date)) like ?', ['%' +query.filtrar+ '%']);
+            console.log("LiP numero:",listPoll);
+            
+        }
     }
     if (0 < listPoll.length){
         data = paginator(listPoll, req.query.pagina, 3, "/", "http://localhost:8080");
