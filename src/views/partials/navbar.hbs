@@ -1,18 +1,24 @@
 <style> 
+    /*@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap');*/
     #fondo{
-        background-color: whitesmoke;
-		background-repeat: no-repeat;
+        /*background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCfDV7Endtbe-UIWpvIzfCuV8AcX1vBe29oA&usqp=CAU");*/
+		
+        background-repeat: no-repeat;
 		background-size: cover;
 		background-position: center;
 		background-attachment: fixed;
+        border-color: black;
 
+    }
+    nav{
+        background-image: url("https://fondosmil.com/fondo/22293.jpg");
     }
 </style>
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light 
-             bg-white border-bottom box-shadow mb-3" id="fondo">
+             bg-white border-bottom box-shadow mb-3" >
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/images/image/iconoLogo.png" class="imglogo" />Mini Encuestas
+            <img src="/images/image/iconoLogo.png" class="imglogo" /><font color="white">Mini Encuestas</font>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,33 +30,33 @@
             
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link text-dark">Bienvenido: {{user.user_name}}</a>
+                        <a class="nav-link text-dark" style="color:#FF0000;font-family:'Nunito', sans-serif; font-size:18px"><font color="#7F8C8D">Bienvenido:{{user.user_name}}</font></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/logout">Cerrar Sesion</a>
+                        <a class="nav-link" href="/logout" style="color:#D35400;font-family:'Nunito', sans-serif; font-size:18px; ">Cerrar Sesion</a>
                     </li>
                 </ul>
                  <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="/listPoll">Home</a>
+                        <a class="nav-link text-dark" href="/listPoll" style="font-family:'Nunito', sans-serif; font-size:20px; "><font color="white">Home</font></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="/createPoll">Crear encuenta</a>
+                        <a class="nav-link text-dark" href="/createPoll" style="color:#FF0000;font-family:'Nunito', sans-serif; font-size:20px"><font color="white">Crear Encuesta</font></a>
                     </li>
                      <li class="nav-item">
-                        <a class="nav-link text-dark" href="/inscriptions">Inscripciones</a>
+                        <a class="nav-link text-dark" href="/inscriptions" style="font-family:'Nunito', sans-serif; font-size:20px"><font color="white">Inscripciones</font></a>
                     </li>
                 </ul>
                 {{else}}
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="/">Home</a>
+                        <a class="nav-link text-dark" href="/" style="font-family:'Nunito', sans-serif; font-size:20px;"><font color="white">Home</font></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="/signin">Iniciar Sesion</a>
+                        <a class="nav-link text-dark" href="/signin" style="font-family:'Nunito', sans-serif; font-size:20px;"><font color="white">Iniciar Sesion</font></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="/signup">Registrarme</a>
+                        <a class="nav-link text-dark" href="/signup" style="font-family:'Nunito', sans-serif; font-size:20px"><font color="white">Registrarme</font></a>
                     </li>
                 </ul>
                 {{/if}}

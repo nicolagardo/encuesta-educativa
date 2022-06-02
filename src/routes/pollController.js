@@ -6,7 +6,7 @@ const { paginator } = require('../lib/paginator');
 const { check, validationResult } = require('express-validator');
 var url = require('url');
 
-router.get('/listPoll', isLoggedIn, async (req, res) => {
+router.get('/listPoll', async (req, res) => {
   let listPoll;
   let data = {};
   var query = url.parse(req.url, true).query;
@@ -140,7 +140,7 @@ router.get('/details', async (req, res) => {
 var responses;
 var poll;
 var poll_id;
-router.get('/votes', isLoggedIn, async (req, res) => {
+router.get('/votes', async (req, res) => {
   var query = url.parse(req.url, true).query;
   poll_id = query.id;
   let multiple = query.multiple;
