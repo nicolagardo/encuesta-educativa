@@ -5,11 +5,14 @@ const { paginator } = require('../lib/paginator');
 var url = require('url');
 
 router.get('/',async(req,res)=>{
+    console.log('en el home');
     var listPoll;
     let data = {};
     var query = url.parse(req.url, true).query;
     if (undefined == query.filtrar){
-        listPoll = "No hay datos que mostrar"
+        console.log('primer if');
+        listPoll = await pool.query('SELECT * FROM polls', [0]);
+        console.log(listPoll);
     }else{
         listPoll = await pool.query('SELECT * FROM polls WHERE poll LIKE ?', ['%' +query.filtrar+ '%']);
         console.log("LiP:",listPoll);

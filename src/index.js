@@ -48,9 +48,9 @@ app.engine('.hbs', exphbs({
   partialsDir: path.join(app.get('views'), 'partials'),
   extname: '.hbs',
 }));
-app.get('/home', (req, res) => {
-  res.sendFile(`${__dirname}/index.html`)
-})
+// app.get('/', (req, res) => {
+//   res.sendFile(`${__dirname}/index`)
+// })
 app.set('view engine', '.hbs');
 
 // Middlewares
