@@ -6,7 +6,7 @@ const { promisify } = require('util');
 const pool = mysql.createConnection(database);
 
 pool.connect((err) => {
-    console.log(database);
+    //console.log(database);
     if (err) {
         switch (err.code) {
             case 'PROTOCOL_CONNECTION_LOST':

@@ -12,7 +12,7 @@ router.get('/',async(req,res)=>{
     if (undefined == query.filtrar){
         console.log('primer if');
         listPoll = await pool.query('SELECT * FROM polls', [0]);
-        console.log(listPoll);
+        console.log('listPOll',listPoll);
     }else{
         listPoll = await pool.query('SELECT * FROM polls WHERE poll LIKE ?', ['%' +query.filtrar+ '%']);
         console.log("LiP:",listPoll);

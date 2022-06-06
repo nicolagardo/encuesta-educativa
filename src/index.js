@@ -42,6 +42,9 @@ require('./lib/passport');
 // Settings
 //app.set('port', process.env.PORT || 8081);
 app.set('views', path.join(__dirname, 'views'));
+//console.log(app.set('views', path.join(__dirname, 'views')));
+
+console.log('__dirname',__dirname);
 app.engine('.hbs', exphbs({
   defaultLayout: 'main',
   layoutsDir: path.join(app.get('views'), 'layouts'),
@@ -49,7 +52,7 @@ app.engine('.hbs', exphbs({
   extname: '.hbs',
 }));
 // app.get('/', (req, res) => {
-//   res.sendFile(`${__dirname}/index`)
+//   res.sendFile(`${__dirname}/main`)
 // })
 app.set('view engine', '.hbs');
 

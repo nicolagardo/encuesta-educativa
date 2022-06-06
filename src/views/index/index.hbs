@@ -20,17 +20,19 @@
 <body>
    
 </body>
-{{>slider}}
+
+{{> slider}}
 <div class="container p-4" id="fondo">
     <form action="/" method="get">
         <div class="row">
             <div class="col-md-4">
-                <input type="text" id="filtrar" name="filtrar" placeholder="Ingrear id o nombre" class="form-control" />
+                <input type="text" id="filtrar" name="filtrar" placeholder="Ingrear id o nombre de la encuesta" class="form-control" />
             </div>
 
             <div class="col-md-1">
                 <div class="row">
-                    <input type="submit" value="Filtar" class="btn btn-info">
+                    <input type="submit" value="Buscar" class="btn btn-info">
+                    
                 </div>
             </div>
         </div>
@@ -46,7 +48,7 @@
                 </div>
                 <div class="card-body">
 
-                    <p class="m-2">{{responses}}: respuestas</p>
+                    <p class="m-2">{{responses}} posibles respuestas</p>
 
                     <a class="btn btn-info" href="/details?id={{id}}">
                         Ingresar a la encuesta

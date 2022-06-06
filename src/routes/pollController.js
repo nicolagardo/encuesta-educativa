@@ -16,7 +16,7 @@ router.get('/listPoll', async (req, res) => {
     listPoll = await pool.query('SELECT * FROM polls WHERE user_id = ? AND poll LIKE ?', [req.user.id, '%' + query.filtrar + '%']);
   }
   if (0 < listPoll.length) {
-    data = paginator(listPoll, req.query.pagina, 1, "/listPoll", "http://localhost:8080");
+    data = paginator(listPoll, req.query.pagina, 1, "/listPoll", "");
   } else {
     data = {
       pagi_info: "No hay datos que mostrar",
@@ -50,8 +50,10 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
     if (err) { throw err; }
     pool.query('INSERT INTO polls SET ?', polls, (err, result) => {
       if (err) {
+        console.log("ERRRRRRRRRRRROR",err);
         pool.rollback(() => {
-          throw err;
+          throw err
+          console.log("ESTE ES EL ERROR: ",err);;
         });
       }
       console.log("result ",result);
@@ -106,6 +108,9 @@ async function codificar(polls) {
 
 
 
+
+
+
 }
 router.get('/details', async (req, res) => {
   var query = url.parse(req.url, true).query;
@@ -147,12 +152,12 @@ router.get('/votes', async (req, res) => {
 
   //console.log("valor:",multiple);
   responses = await pool.query("SELECT * FROM responses WHERE polls_id =?", [query.id]);
-  let inscription = await pool.query("SELECT * FROM inscriptions WHERE poll_id =? ", [poll_id]);
+  let inscription = await pool.query("SELECT * FROM inscriptions WHERE poll_id =?", [poll_id]);
   let value = true;
   if (0 < inscription.length) {
     value = false;
   }
-  
+  console.log(responses);
   poll = query.poll;
   if (multiple == 1) {
     res.render('poll/multiplechoice', { responses, poll, value, multiple });
@@ -170,15 +175,14 @@ router.post('/votes', [
     res.render('poll/votes', { responses, poll, errors: errors.array() });
   } else {
     const { response } = req.body;
-    console.log("ESTE response que tiene: ", response);
     let responses = await pool.query("SELECT * FROM responses WHERE id =?", [response]);
-    console.log("responses!! ", responses);
     let vote = responses[0].votes;
     var respon = responses[0].response;
     vote++;
     let response_id = parseInt(response, 10);
     let data = [vote, response_id];
     await pool.beginTransaction((err) => {
+      console.log("DATAAAAAAAA: ", data);
       pool.query('UPDATE responses SET votes = ? WHERE id =?', data, (err, result) => {
         if (err) {
           pool.rollback(() => {
@@ -187,6 +191,7 @@ router.post('/votes', [
         }
         let res = {
           poll_id: poll_id,
+          user_id: req.user.id,
           response: respon,
           response_id: response_id,
           date: new Date()
@@ -209,7 +214,7 @@ router.post('/votes', [
       });
     });
   }
-  console.log("QUE ES ESTOooo",req.body);
+  console.log(req.body);
 
 });
 router.post('/multiplechoice', [
