@@ -75,7 +75,7 @@
     </div>
 </div>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
+<script src="socket.io/socket.io.js"></script>
 <script type="text/javascript">
     google.charts.load('current', { 'packages': ['bar'] });
     google.charts.setOnLoadCallback(drawStuff);
@@ -113,7 +113,7 @@
             legend: { position: 'none' },
             chart: {
                 title: "{{data.poll}}",
-                subtitle: 'Sistema de encuestas Quo'
+                subtitle: 'Sistema de encuestas'
             },
             axes: {
                 x: {

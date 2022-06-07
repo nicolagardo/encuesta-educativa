@@ -77,11 +77,14 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
             throw err;
           });
         }
-        //codificar();
+        codificar();
+        
         console.log('Transaction Complete.');
+        
 
         res.redirect('/confir');
       });
+      
     });
 
 
@@ -92,18 +95,19 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
 
 });
 
-/*async function codificar() {
+ async function codificar() {
   const date=new Date();
   const idPoll = await pool.query("SELECT id from polls order by id desc limit 1");
   console.log("iP:", idPoll[0].id);
   console.log("Codigo: " + idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());
   
-  var codigo=idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate();
+  var codigo=`${idPoll[0].id}${date.getDay()}${(date.getMonth()+1)}${date.getDate()}`;
+  console.log(codigo);
   /*let alert=require("alert");
-  alert("Codigo de Encuesta: "+ idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());
+  alert("Codigo de Encuesta: "+ idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());*/
   return codigo;
 
-}*/
+}
 
 
 router.get('/details', async (req, res) => {
@@ -207,7 +211,7 @@ router.post('/votes', [
       });
     });
   }
-  console.log(req.body);
+  //console.log(req.body);
 
 });
 router.post('/multiplechoice', [
@@ -234,7 +238,7 @@ router.post('/multiplechoice', [
   console.log(req.body);
 
 });
-async function cargarMultiple(respuesta, userid) {
+ async function cargarMultiple(respuesta, userid) {
   console.log("usuario", userid);
 
   let responses = await pool.query("SELECT * FROM responses WHERE id =?", respuesta);
@@ -297,7 +301,7 @@ router.get('/delete/:id', async (req, res) => {
       });
     });
   });
-  console.log(id);
+  console.log("id ",id);
 
 });
-module.exports = router;
+module.exports = router, codificar;

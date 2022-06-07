@@ -6,6 +6,12 @@ const MySQLStore = require('express-mysql-session');
 const session = require('express-session');
 const { database } = require('./config');
 
+
+//TODO: SOKETIO
+
+const socket = require('socket.io')
+
+
 // Intializations
 const app = express();
 require('./lib/passport');
