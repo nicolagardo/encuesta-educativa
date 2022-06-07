@@ -87,7 +87,7 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
             throw err;
           });
         }
-        codificar();
+        codificar(polls);
         console.log('Transaction Complete.');
         
 
@@ -105,15 +105,15 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
 
 });
 
-async function codificar() {
+async function codificar(polls) {
 
   const idPoll = await pool.query("SELECT id from polls order by id desc limit 1");
   console.log("iP:", idPoll[0].id);
   const date = new Date();
   console.log(date);
-  console.log("Codigo: " + idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());
+  console.log("Codigo: " + polls.idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
   let alert=require('alert')
-  alert("Codigo de Encuesta: "+ idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());
+  alert("Codigo de Encuesta: "+ polls.idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
   
 
 
