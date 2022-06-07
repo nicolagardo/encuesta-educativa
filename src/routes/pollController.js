@@ -89,9 +89,12 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
         }
         codificar(polls);
         console.log('Transaction Complete.');
+        
 
         res.redirect('/listPoll');
+        //res.redirect('/confir');
       });
+      
     });
 
 
@@ -156,7 +159,7 @@ router.get('/details', async (req, res) => {
 var responses;
 var poll;
 var poll_id;
-router.get('/votes', async (req, res) => {
+router.get('/votes', isLoggedIn, async (req, res) => {
   var query = url.parse(req.url, true).query;
   poll_id = query.id;
   let multiple = query.multiple;
@@ -227,7 +230,7 @@ router.post('/votes', [
       });
     });
   }
-  console.log(req.body);
+  //console.log(req.body);
 
 });
 router.post('/multiplechoice', [
@@ -254,7 +257,7 @@ router.post('/multiplechoice', [
   console.log(req.body);
 
 });
-async function cargarMultiple(respuesta, userid) {
+ async function cargarMultiple(respuesta, userid) {
   console.log("usuario", userid);
 
   let responses = await pool.query("SELECT * FROM responses WHERE id =?", respuesta);
@@ -317,7 +320,7 @@ router.get('/delete/:id', async (req, res) => {
       });
     });
   });
-  console.log(id);
+  console.log("id ",id);
 
 });
 module.exports = router;

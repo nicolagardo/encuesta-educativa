@@ -7,7 +7,7 @@
     margin-right: 4cm;
 }
 .border-bottom {
-    border-bottom: 3px solid #22a822  !important;
+    border-bottom: 3px solid #2eec21  !important;
 }
 #menuNavbar{
     width: 100%;
@@ -20,7 +20,9 @@
     text-align: center;
 }
 .sh__meta span, .sh__meta h4 {
-    color: rgb(85, 85, 85);
+    color: rgb(109, 242, 226);
+    -webkit-text-stroke: 0.8px rgb(26, 125, 79);
+    text-shadow: 2px 2px 2px rgb(86, 75, 242)
 }
 @media (min-width: 768px){
     .imglogo {
