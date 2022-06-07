@@ -26,9 +26,10 @@
                             <p>opciones</p>
                         </div>
                         <div class="row">
-                            <p votos>{{votes}}</p>
+                            <p id="votoss">{{votes}}</p>
+                           
                             &nbsp;
-                            <p>Votos</p>
+                            <p>votos</p>
                         </div>
                         <div class="row">
                             <a class="btn btn-info"
@@ -73,26 +74,31 @@
 
         </div>
     </div>
-        <script src="/socket.io/socket.io.js"></script>
 
 </div>
-
+ <script src="/socket.io/socket.io.js"></script>
+<script>
+    //let socket =io()
+    //console.log("En votes: ", {{votes}})
+    //socket.emit('votook', 'alguien esta por votar');
+    
+</script>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
  <script>
-        let socket =io()
-        /*const form = document.querySelector('form')
-        const input = document.querySelector('input')
-        let mensajes = document.querySelector('ul')
-        form.addEventListener('submit', e => {
-            e.preventDefault()
-            if(input.value){
-                socket.emit('chat', input.value)
-                input.value = ''
-            }
-        })
-*/
+        //let socket =io()
+        //const form = document.getElementById('votoss')
+        //const input = document.querySelector('input')
+        //let mensajes = document.querySelector('ul')
+        //form.addEventListener('submit', e => {
+        //    e.preventDefault()
+        //    if(input.value){
+        //        socket.emit('chat', input.value)
+        //        input.value = ''
+        //    }
+        //})
+
         //socket.on('chat', msg => {
         //    let item = document.createElement('li')
         //    item.textContent = msg
@@ -138,7 +144,7 @@
             legend: { position: 'none' },
             chart: {
                 title: "{{data.poll}}",
-                subtitle: 'Sistema de encuestas Quo'
+                subtitle: 'Sistema de encuestas'
             },
             axes: {
                 x: {

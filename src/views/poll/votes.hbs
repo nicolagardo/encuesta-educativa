@@ -45,15 +45,36 @@
                   
                     <br>
                     <div class="form-group">
+                        <script>console.log({{value}})</script>
                         {{#if value }}
-                        <input type="submit" value="Votar" class="btn btn-success btn-block">
+                            <input type="submit" value="Votar"  class="btn btn-success btn-block">
                         {{else}}
-                         <input type="submit" value="Votar" class="btn btn-success btn-block" >
                         
+                            <!--<input type="text" class="form-control" placeholder="Ingrese">-->
+                            <input type="submit" value="Votar" id="sevoto" class="btn btn-success btn-block" disabled>
                         {{/if}}
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <script ></script>
+
+    <script src="/socket.io/socket.io.js">
+        //let socket =io()
+        const form = document.querySelector('form');
+        const input = document.querySelector('input');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            if(e){
+                socket.emit('votook', 'alguien votó');
+                //input.value = '';
+
+            }
+                
+           
+        })
+
+    </script>
 </div>

@@ -5,6 +5,7 @@ const pool = require('../connection');
 const { paginator } = require('../lib/paginator');
 const { check, validationResult } = require('express-validator');
 var url = require('url');
+//const io = require("socket.io-client");
 
 router.get('/listPoll', async (req, res) => {
   let listPoll;
@@ -112,6 +113,10 @@ async function codificar(polls) {
 
 
 }
+
+
+//let socket = io()
+//socket.emit('votook', 'alguien esta por votar');
 router.get('/details', async (req, res) => {
   var query = url.parse(req.url, true).query;
   var condicion = "polls.id=responses.polls_id";
@@ -119,13 +124,13 @@ router.get('/details', async (req, res) => {
     + ",responses.response,responses.votes";
   const listPoll = await pool.query("SELECT " + campos + " FROM polls Inner Join responses ON " + condicion + " WHERE polls.id =?", [query.id]);
   //let multiple= await pool.query("SELECT multiplechoice FROM polls WHERE polls.id =?", [query.id]);
-  console.log("query.id",query);
+  //console.log("query.id",query);
 
   let responses2 = new Array();
   let votes = 0;
   for (let i = 0; i < listPoll.length; i++) {
     let responses1 = new Array();
-    console.log("ValP:",listPoll[i]);
+    //console.log("ValP:",listPoll[i]);
     responses1[0] = listPoll[i].response;
     responses1[1] = listPoll[i].votes;
     votes += listPoll[i].votes;
@@ -133,7 +138,7 @@ router.get('/details', async (req, res) => {
   }
   let responses = JSON.stringify(responses2);
   responses = JSON.parse(responses);
-  console.log("valor: ",responses);
+  //console.log("valor: ",responses);
   var data = listPoll[0];
   var multiple = listPoll[0].multiplechoice;
 
@@ -155,7 +160,7 @@ router.get('/votes', async (req, res) => {
   let inscription = await pool.query("SELECT * FROM inscriptions WHERE poll_id =?", [poll_id]);
   let value = true;
   if (0 < inscription.length) {
-    value = false;
+    value = true;
   }
   console.log(responses);
   poll = query.poll;
@@ -168,14 +173,16 @@ router.get('/votes', async (req, res) => {
 
 });
 router.post('/votes', [
-  check('response').not().isEmpty().withMessage('Select one of the options')
+  check('response').not().isEmpty().withMessage('Seleccionar una opción')
 ], async (req, res) => {
   const errors = validationResult(req);
+  console.log("en el router. post /votes");
   if (!errors.isEmpty()) {
     res.render('poll/votes', { responses, poll, errors: errors.array() });
   } else {
     const { response } = req.body;
     let responses = await pool.query("SELECT * FROM responses WHERE id =?", [response]);
+    console.log("ACA PODRIA EMITIR EL EVENTO Socket");
     let vote = responses[0].votes;
     var respon = responses[0].response;
     vote++;
@@ -191,7 +198,7 @@ router.post('/votes', [
         }
         let res = {
           poll_id: poll_id,
-          user_id: req.user.id,
+          // user_id: req.user.id,
           response: respon,
           response_id: response_id,
           date: new Date()
@@ -218,8 +225,8 @@ router.post('/votes', [
 
 });
 router.post('/multiplechoice', [
-  check('response').not().isEmpty().withMessage('Select one of the options')
-], isLoggedIn, async (req, res) => {
+  check('response').not().isEmpty().withMessage('Seleleccionar al menos una opción')
+], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     res.render('poll/multiplechoice', { responses, poll, errors: errors.array() });
@@ -227,7 +234,7 @@ router.post('/multiplechoice', [
     //editar aca
     const { response } = req.body;
     response.forEach(respuesta => {
-      cargarMultiple(respuesta, req.user.id);
+      cargarMultiple(respuesta);
     })
     pool.commit((err) => {
       if (err) {

@@ -26,14 +26,16 @@ const io = new Server(server)
 
 io.on('connection', socket => {
     console.log('Un usuario se ha conectado');
-    console.log("socket: ",socket.id);
-    // socket.on('chat', msg => {
-    //     console.log(`Mensaje: ${msg}`);
+    //console.log("socket: ",socket.id);
+    socket.on('votook', msg => {
+         console.log(`Mensaje: ${msg}`);
+         io.emit('votook',msg )
 
-    // })
-//     socket.on('chat', msg => {
-//         io.emit('chat', msg)
-    // }) 
+      })
+  //  socket.on('votook', msg => {
+  //       console.log('Mensaje: '+msg);
+  //       io.emit('votook', msg)
+  //   }) 
   })
 
 
