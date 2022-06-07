@@ -112,7 +112,7 @@ async function codificar() {
   const date = new Date();
   console.log(date);
   console.log("Codigo: " + idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());
-  
+  let alert=require('alert')
   return alert("Codigo de Encuesta: "+ idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());
   
 
@@ -159,7 +159,7 @@ router.get('/details', async (req, res) => {
 var responses;
 var poll;
 var poll_id;
-router.get('/votes', isLoggedIn, async (req, res) => {
+router.get('/votes', async (req, res) => {
   var query = url.parse(req.url, true).query;
   poll_id = query.id;
   let multiple = query.multiple;

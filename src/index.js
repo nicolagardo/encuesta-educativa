@@ -11,7 +11,7 @@ const { database } = require('./config');
 
 //ENV
 
-require('dotenv').config();
+
 
 // Intializations
 const app = express();
