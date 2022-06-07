@@ -111,9 +111,9 @@ async function codificar(polls) {
   console.log("iP:", idPoll[0].id);
   const date = new Date();
   console.log(date);
-  console.log("Codigo: " + polls.idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
+  console.log("Codigo: " + idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
   let alert=require('alert')
-  alert("Codigo de Encuesta: "+ polls.idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
+  alert("Codigo de Encuesta: "+ idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
   
 
 
