@@ -189,7 +189,9 @@ router.post('/votes', [
   if (!errors.isEmpty()) {
     res.render('poll/votes', { responses, poll, errors: errors.array() });
   } else {
+    
     const { response } = req.body;
+    console.log("response: ", response);
     let responses = await pool.query("SELECT * FROM responses WHERE id =?", [response]);
     console.log("ACA PODRIA EMITIR EL EVENTO Socket");
     let vote = responses[0].votes;
@@ -234,7 +236,7 @@ router.post('/votes', [
 
 });
 router.post('/multiplechoice', [
-  check('response').not().isEmpty().withMessage('Seleleccionar al menos una opción')
+  check('response').not().isEmpty().withMessage('Seleccionar al menos una opción')
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -242,6 +244,7 @@ router.post('/multiplechoice', [
   } else {
     //editar aca
     const { response } = req.body;
+    console.log("response en multiplechoice ", response);
     response.forEach(respuesta => {
       cargarMultiple(respuesta);
     })
@@ -251,7 +254,7 @@ router.post('/multiplechoice', [
           throw err;
         });
       }
-      res.redirect('/details?id=' + responses[0].polls_id);
+      res.redirect('/details?id=' + response);
     });
   }
   console.log(req.body);
@@ -276,7 +279,7 @@ router.post('/multiplechoice', [
       }
       let res = {
         poll_id: poll_id,
-        user_id: userid,
+        //user_id: userid,
         response: respon,
         response_id: response_id,
         date: new Date()
