@@ -5,6 +5,7 @@ const pool = require('../connection');
 const { paginator } = require('../lib/paginator');
 const { check, validationResult } = require('express-validator');
 var url = require('url');
+const res = require('express/lib/response');
 
 router.get('/listPoll', isLoggedIn, async (req, res) => {
   let listPoll;
@@ -76,10 +77,10 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
             throw err;
           });
         }
-        codificar(polls);
+        //codificar();
         console.log('Transaction Complete.');
 
-        res.redirect('/listPoll');
+        res.redirect('/confir');
       });
     });
 
@@ -91,18 +92,20 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
 
 });
 
-async function codificar(polls) {
-
+/*async function codificar() {
+  const date=new Date();
   const idPoll = await pool.query("SELECT id from polls order by id desc limit 1");
   console.log("iP:", idPoll[0].id);
-  console.log("Codigo: " + idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
-  let alert=require("alert");
-  alert("Codigo de Encuesta: "+ idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
+  console.log("Codigo: " + idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());
   
+  var codigo=idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate();
+  /*let alert=require("alert");
+  alert("Codigo de Encuesta: "+ idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());
+  return codigo;
+
+}*/
 
 
-
-}
 router.get('/details', async (req, res) => {
   var query = url.parse(req.url, true).query;
   var condicion = "polls.id=responses.polls_id";
@@ -136,14 +139,14 @@ router.get('/details', async (req, res) => {
 var responses;
 var poll;
 var poll_id;
-router.get('/votes', async (req, res) => {
+router.get('/votes', isLoggedIn, async (req, res) => {
   var query = url.parse(req.url, true).query;
   poll_id = query.id;
   let multiple = query.multiple;
 
   //console.log("valor:",multiple);
   responses = await pool.query("SELECT * FROM responses WHERE polls_id =?", [query.id]);
-  let inscription = await pool.query("SELECT * FROM inscriptions WHERE poll_id =? ", [poll_id]);
+  let inscription = await pool.query("SELECT * FROM inscriptions WHERE poll_id =? AND user_id =?", [poll_id, req.user.id]);
   let value = true;
   if (0 < inscription.length) {
     value = false;
@@ -160,7 +163,7 @@ router.get('/votes', async (req, res) => {
 });
 router.post('/votes', [
   check('response').not().isEmpty().withMessage('Select one of the options')
-], async (req, res) => {
+], isLoggedIn, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     res.render('poll/votes', { responses, poll, errors: errors.array() });
@@ -181,6 +184,7 @@ router.post('/votes', [
         }
         let res = {
           poll_id: poll_id,
+          user_id: req.user.id,
           response: respon,
           response_id: response_id,
           date: new Date()

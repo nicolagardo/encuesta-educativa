@@ -3,6 +3,7 @@ const router = express.Router();
 const pool = require('../connection');
 const { paginator } = require('../lib/paginator');
 var url = require('url');
+const {codificar}=require('./pollController')
 
 router.get('/',async(req,res)=>{
     var listPoll;
@@ -28,6 +29,37 @@ router.get('/',async(req,res)=>{
           };
     }
     res.render('index/index', { data });
+});
+router.get('/slider',async(req,res)=>{
+    res.render('partials/slider1');
+
+
+});
+router.get('/slider',async(req,res)=>{
+    res.render('partials/slider2');
+
+
+});
+router.get('/slider',async(req,res)=>{
+    res.render('partials/slider3');
+
+
+});
+router.get('/slider',async(req,res)=>{
+    res.render('partials/slider4');
+
+
+});
+router.get('/slider',async(req,res)=>{
+    res.render('partials/slider5');
+
+
+});
+router.get('/confir',async(req,res)=>{
+    //codificar.codificar(polls);
+    res.render('poll/confir');
+
+
 });
 module.exports = router;
 

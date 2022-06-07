@@ -15,6 +15,12 @@ router.get('/inscriptions', async (req, res) => {
         listPoll = await pool.query("SELECT " + campos + " FROM polls Inner Join inscriptions ON " + condicion+' WHERE inscriptions.user_id =?', [req.user.id]);
     }else{
         listPoll = await pool.query("SELECT " + campos + " FROM polls Inner Join inscriptions ON " + condicion +' WHERE inscriptions.user_id =? AND poll LIKE ?', [req.user.id,'%' +query.filtrar+ '%']);
+        if (listPoll.length<=0) {
+            console.log("funciona");
+            listPoll = await pool.query('SELECT * from polls where concat_ws(\'\', id,WEEKDAY(date)+1, extract(month from date),extract(day from date)) like ?', ['%' +query.filtrar+ '%']);
+            console.log("LiP numero:",listPoll);
+            
+        }
     }
     if (0 < listPoll.length){
         data = paginator(listPoll, req.query.pagina, 3, "/inscriptions", "http://localhost:8080");
