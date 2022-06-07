@@ -12,10 +12,14 @@ router.get('/listPoll', async (req, res) => {
   let data = {};
   var query = url.parse(req.url, true).query;
   if (undefined == query.filtrar) {
+    console.log("req.user.id: ",req.user.id );
     listPoll = await pool.query('SELECT * FROM polls WHERE user_id = ?', [req.user.id]);
   } else {
+    console.log("aca entonces");
     listPoll = await pool.query('SELECT * FROM polls WHERE user_id = ? AND poll LIKE ?', [req.user.id, '%' + query.filtrar + '%']);
   }
+  const usuarioId = req.user.id;
+  data = await pool.query(`SELECT * FROM polls WHERE user_id =${usuarioId}`)
   if (0 < listPoll.length) {
     data = paginator(listPoll, req.query.pagina, 1, "/listPoll", "");
   } else {
@@ -98,13 +102,15 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
 
 });
 
-async function codificar(polls) {
+async function codificar() {
 
   const idPoll = await pool.query("SELECT id from polls order by id desc limit 1");
   console.log("iP:", idPoll[0].id);
-  console.log("Codigo: " + idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
-  let alert=require("alert");
-  alert("Codigo de Encuesta: "+ idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
+  const date = new Date();
+  console.log(date);
+  console.log("Codigo: " + idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());
+  
+  return alert("Codigo de Encuesta: "+ idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());
   
 
 
