@@ -87,7 +87,7 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
             throw err;
           });
         }
-        codificar(polls);
+        codificar();
         console.log('Transaction Complete.');
         
 
@@ -113,7 +113,7 @@ async function codificar() {
   console.log(date);
   console.log("Codigo: " + idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());
   let alert=require('alert')
-  return alert("Codigo de Encuesta: "+ idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());
+  alert("Codigo de Encuesta: "+ idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());
   
 
 
