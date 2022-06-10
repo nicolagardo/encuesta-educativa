@@ -88,6 +88,8 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
           });
         }
         codificar(polls);
+        const codiguito = codificar(polls);
+        console.log("Test de codigo: ", codiguito.promise());
         console.log('Transaction Complete.');
         
 
@@ -112,9 +114,10 @@ async function codificar(polls) {
   const date = new Date();
   console.log(date);
   console.log("Codigo: " + idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
+  const codigoJuego = "Codigo: " + idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate();
   let alert=require('alert')
   alert("Codigo de Encuesta: "+ idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
-  
+  return codigoJuego;
 
 
 

@@ -27,9 +27,9 @@ const io = new Server(server)
 io.on('connection', socket => {
     console.log('Un usuario se ha conectado');
     //console.log("socket: ",socket.id);
-    socket.on('votook', msg => {
+    socket.on('reload', msg => {
          console.log(`Mensaje: ${msg}`);
-         io.emit('votook',msg )
+         io.emit('reload','hola, soy el server' )
 
       })
   //  socket.on('votook', msg => {
