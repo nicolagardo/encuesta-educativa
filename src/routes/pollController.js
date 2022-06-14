@@ -37,7 +37,7 @@ router.get('/createPoll', isLoggedIn, async (req, res) => {
 });
 
 router.post('/createPoll', isLoggedIn, async (req, res) => {
-  console.log(" QUE JORACA ES ESTO: ",req.body);
+  //console.log(" QUE JORACA ES ESTO: ",req.body);
   const { poll, response } = req.body;
   let responses = response.length;
   let multipleC = req.body.multiplechoice;
@@ -61,18 +61,18 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
           console.log("ESTE ES EL ERROR: ",err);;
         });
       }
-      console.log("result ",result);
+      //console.log("result ",result);
 
       var polls_id = result.insertId;
       console.log("polls_id ",polls_id);
-      console.log("response ",response);
+      //console.log("response ",response);
       response.forEach(element => {
         let res = {
           response: element,
           votes: 0,
           polls_id: polls_id
         };
-        console.log("RES: ",res);
+        //console.log("RES: ",res);
         pool.query('INSERT INTO responses SET ?', res, (err, result) => {
           if (err) {
             pool.rollback(() => {
@@ -134,6 +134,7 @@ router.get('/details', async (req, res) => {
   var condicion = "polls.id=responses.polls_id";
   var campos = "polls.id,polls.poll,polls.responses,polls.user_id,polls.date,polls.multiplechoice"
     + ",responses.response,responses.votes";
+    
   const listPoll = await pool.query("SELECT " + campos + " FROM polls Inner Join responses ON " + condicion + " WHERE polls.id =?", [query.id]);
   //let multiple= await pool.query("SELECT multiplechoice FROM polls WHERE polls.id =?", [query.id]);
   //console.log("query.id",query);
@@ -152,6 +153,7 @@ router.get('/details', async (req, res) => {
   responses = JSON.parse(responses);
   //console.log("valor: ",responses);
   var data = listPoll[0];
+  console.log(`data que va a details: ${data}`);
   var multiple = listPoll[0].multiplechoice;
 
   res.render('poll/details', { data, responses, votes, multiple });
@@ -174,7 +176,7 @@ router.get('/votes', async (req, res) => {
   if (0 < inscription.length) {
     value = true;
   }
-  console.log(responses);
+  //console.log(responses);
   poll = query.poll;
   if (multiple == 1) {
     res.render('poll/multiplechoice', { responses, poll, value, multiple });
@@ -188,23 +190,23 @@ router.post('/votes', [
   check('response').not().isEmpty().withMessage('Seleccionar una opción')
 ], async (req, res) => {
   const errors = validationResult(req);
-  console.log("en el router. post /votes");
+  //console.log("en el router. post /votes");
   if (!errors.isEmpty()) {
     res.render('poll/votes', { responses, poll, errors: errors.array() });
     console.log("ENTRA AL RENDER");
   } else {
     
     const { response } = req.body;
-    console.log("response: ", response);
+    //console.log("response: ", response);
     let responses = await pool.query("SELECT * FROM responses WHERE id =?", [response]);
-    console.log("ACA PODRIA EMITIR EL EVENTO Socket");
+    //console.log("ACA PODRIA EMITIR EL EVENTO Socket");
     let vote = responses[0].votes;
     var respon = responses[0].response;
     vote++;
     let response_id = parseInt(response, 10);
     let data = [vote, response_id];
     await pool.beginTransaction((err) => {
-      console.log("DATAAAAAAAA: ", data);
+      //console.log("DATAAAAAAAA: ", data);
       pool.query('UPDATE responses SET votes = ? WHERE id =?', data, (err, result) => {
         if (err) {
           pool.rollback(() => {
@@ -261,14 +263,14 @@ router.post('/multiplechoice', [
       res.redirect('/details?id=' + response);
     });
   }
-  console.log(req.body);
+  //console.log(req.body);
 
 });
  async function cargarMultiple(respuesta, userid) {
-  console.log("usuario", userid);
+  //console.log("usuario", userid);
 
   let responses = await pool.query("SELECT * FROM responses WHERE id =?", respuesta);
-  console.log("Res:", responses[0]);
+  //console.log("Res:", responses[0]);
   let vote = responses[0].votes;
   var respon = responses[0].response;
   vote++;
@@ -327,7 +329,7 @@ router.get('/delete/:id', async (req, res) => {
       });
     });
   });
-  console.log("id ",id);
+  //console.log("id ",id);
 
 });
 module.exports = router;
