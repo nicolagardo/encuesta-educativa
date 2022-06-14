@@ -18,8 +18,7 @@ router.get('/listPoll', async (req, res) => {
     console.log("aca entonces");
     listPoll = await pool.query('SELECT * FROM polls WHERE user_id = ? AND poll LIKE ?', [req.user.id, '%' + query.filtrar + '%']);
   }
-  const usuarioId = req.user.id;
-  data = await pool.query(`SELECT * FROM polls WHERE user_id =${usuarioId}`)
+  
   if (0 < listPoll.length) {
     data = paginator(listPoll, req.query.pagina, 1, "/listPoll", "");
   } else {
@@ -27,8 +26,11 @@ router.get('/listPoll', async (req, res) => {
       pagi_info: "No hay datos que mostrar",
     };
   }
+  
+  
 
-  res.render('poll/listPoll', { data });
+
+  res.render('poll/listPoll', { data});
 });
 
 router.get('/createPoll', isLoggedIn, async (req, res) => {
@@ -49,7 +51,11 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
     multiplechoice: multipleC
 
   };
+  
   console.log("dia:", polls.date.getDay(), polls.date.getMonth(), polls.date.getDate());
+  var ddia=(polls.date.getDay()+ polls.date.getMonth()+ polls.date.getDate());
+  console.log("99999:",ddia)
+
   await pool.beginTransaction((err) => {
 
     if (err) { throw err; }
@@ -87,14 +93,12 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
             throw err;
           });
         }
-        codificar(polls);
-        const codiguito = codificar(polls);
-        console.log("Test de codigo: ", codiguito.promise());
+        //codificar(polls);
         console.log('Transaction Complete.');
         
 
-        res.redirect('/listPoll');
-        //res.redirect('/confir');
+        //res.redirect('/listPoll');
+        res.redirect('/confir');
       });
       
     });
@@ -107,7 +111,7 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
 
 });
 
-async function codificar(polls) {
+/*async function codificar(polls) {
 
   const idPoll = await pool.query("SELECT id from polls order by id desc limit 1");
   console.log("iP:", idPoll[0].id);
@@ -117,18 +121,12 @@ async function codificar(polls) {
   const codigoJuego = "Codigo: " + idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate();
   let alert=require('alert')
   alert("Codigo de Encuesta: "+ idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
-  return codigoJuego;
+  return "koodigo"+idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate();
+  
 
 
 
-
-
-
-}
-
-
-//let socket = io()
-//socket.emit('votook', 'alguien esta por votar');
+}*/
 router.get('/details', async (req, res) => {
   var query = url.parse(req.url, true).query;
   var condicion = "polls.id=responses.polls_id";

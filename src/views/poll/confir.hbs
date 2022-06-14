@@ -1,26 +1,30 @@
-
-
-
-
-<body>
-    <h2>Encuesta creada</h2>
-    <h3>Codigo de encuesta{kodi} </h3>
-    <script>
-         const kodi = async function codificar() {
-
-        const date = new Date();
-        const idPoll = await pool.query("SELECT id from polls order by id desc limit 1");
-        console.log("iP:", idPoll[0].id);
-        console.log("Codigo: " + idPoll[0].id + date.getDay() + (date.getMonth() + 1) + date.getDate());
-
-        var codigo = 'CODIGO'+idPoll[0].id + date.getDay() + (date.getMonth() + 1) + date.getDate();
-        /*let alert=require("alert");
-        alert("Codigo de Encuesta: "+ idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());*/
-        console.log("Codigo: ");
-        return codigo;
+<style> 
+    #fondo{
+        background-image: url("https://cdn.pixabay.com/photo/2015/08/26/07/03/background-908172_960_720.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
+		background-attachment: fixed;
 
     }
+</style>
+
+<body id="fondo">
+    <center>    <h2>Encuesta creada</h2></center>
+    <center>    <h3>Aguarde el Codigo de encuesta</h3>  </center>
+    <center>    <h4>Esto puede tardar unos segundos    </h4></center>
+    <h3>kode{{a}}</h3>
+    <script>
+        console.log(kode);
     </script>
+    {{#if kode }}
+
+    <center><h4> {{kode}}  </h4> </center>
+    {{/if}}
+   
+        
+	
+    
 </body>
 <div>
     <h2>Encuesta creada</h2>
@@ -29,6 +33,7 @@
     
     
 
+<<<<<<< HEAD
     <script>
       
     
@@ -40,3 +45,9 @@
    </script> 
 </div>
     
+=======
+
+
+
+</html>
+>>>>>>> 41c6f33e19a774469f227361b519d9aad5c88e51
