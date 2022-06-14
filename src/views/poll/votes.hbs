@@ -44,10 +44,10 @@
                     
                   
                     <br>
-                    <div class="form-group">
-                        <script>console.log({{value}})</script>
+                    <div id="form1" class="form-group">
+                        <script>console.log("MM value: ",{{votes}})</script>
                         {{#if value }}
-                            <input type="submit" value="Votar"  class="btn btn-success btn-block">
+                            <input  type="submit" value="Votar"  class="btn btn-success btn-block">
                         {{else}}
                         
                             <!--<input type="text" class="form-control" placeholder="Ingrese">-->
@@ -58,23 +58,27 @@
             </div>
         </div>
     </div>
-    <script ></script>
+    <script src="socket.io/socket.io.js"></script>
 
-    <script src="/socket.io/socket.io.js">
-        //let socket =io()
-        const form = document.querySelector('form');
+    <script>
+        let socket =io()
+        const form = document.getElementById('form1');
         const input = document.querySelector('input');
+        socket.emit('reload', 'hola soy votes')  
+        socket.on('reload', msg => {
+            console.log(msg)
+        })              
 
-        form.addEventListener('submit', e => {
-            e.preventDefault()
-            if(e){
-                socket.emit('votook', 'alguien votó');
-                //input.value = '';
+        form.addEventListener('submit', e=> {
+            e.preventDefault();
+            if(form){
+                socket.emit('reload', 'has votado')
+
+            }else{
+                socket.emit('reload', 'en el else')
 
             }
-                
-           
-        })
+            })
 
     </script>
 </div>

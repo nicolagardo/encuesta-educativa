@@ -88,6 +88,8 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
           });
         }
         codificar(polls);
+        const codiguito = codificar(polls);
+        console.log("Test de codigo: ", codiguito.promise());
         console.log('Transaction Complete.');
         
 
@@ -105,16 +107,17 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
 
 });
 
-async function codificar() {
+async function codificar(polls) {
 
   const idPoll = await pool.query("SELECT id from polls order by id desc limit 1");
   console.log("iP:", idPoll[0].id);
   const date = new Date();
   console.log(date);
-  console.log("Codigo: " + idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());
-  
-  return alert("Codigo de Encuesta: "+ idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());
-  
+  console.log("Codigo: " + idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
+  const codigoJuego = "Codigo: " + idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate();
+  let alert=require('alert')
+  alert("Codigo de Encuesta: "+ idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
+  return codigoJuego;
 
 
 
@@ -159,7 +162,7 @@ router.get('/details', async (req, res) => {
 var responses;
 var poll;
 var poll_id;
-router.get('/votes', isLoggedIn, async (req, res) => {
+router.get('/votes', async (req, res) => {
   var query = url.parse(req.url, true).query;
   poll_id = query.id;
   let multiple = query.multiple;
@@ -188,8 +191,11 @@ router.post('/votes', [
   console.log("en el router. post /votes");
   if (!errors.isEmpty()) {
     res.render('poll/votes', { responses, poll, errors: errors.array() });
+    console.log("ENTRA AL RENDER");
   } else {
+    
     const { response } = req.body;
+    console.log("response: ", response);
     let responses = await pool.query("SELECT * FROM responses WHERE id =?", [response]);
     console.log("ACA PODRIA EMITIR EL EVENTO Socket");
     let vote = responses[0].votes;
@@ -234,7 +240,7 @@ router.post('/votes', [
 
 });
 router.post('/multiplechoice', [
-  check('response').not().isEmpty().withMessage('Seleleccionar al menos una opción')
+  check('response').not().isEmpty().withMessage('Seleccionar al menos una opción')
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -242,6 +248,7 @@ router.post('/multiplechoice', [
   } else {
     //editar aca
     const { response } = req.body;
+    console.log("response en multiplechoice ", response);
     response.forEach(respuesta => {
       cargarMultiple(respuesta);
     })
@@ -251,7 +258,7 @@ router.post('/multiplechoice', [
           throw err;
         });
       }
-      res.redirect('/details?id=' + responses[0].polls_id);
+      res.redirect('/details?id=' + response);
     });
   }
   console.log(req.body);
@@ -276,7 +283,7 @@ router.post('/multiplechoice', [
       }
       let res = {
         poll_id: poll_id,
-        user_id: userid,
+        //user_id: userid,
         response: respon,
         response_id: response_id,
         date: new Date()
