@@ -15,6 +15,7 @@ router.get('/listPoll', isLoggedIn, async (req, res) => {
   } else {
     listPoll = await pool.query('SELECT * FROM polls WHERE user_id = ? AND poll LIKE ?', [req.user.id, '%' + query.filtrar + '%']);
   }
+  
   if (0 < listPoll.length) {
     data = paginator(listPoll, req.query.pagina, 5, "/listPoll", "http://localhost:8080");
   } else {
@@ -22,8 +23,11 @@ router.get('/listPoll', isLoggedIn, async (req, res) => {
       pagi_info: "No hay datos que mostrar",
     };
   }
+  
+  
 
-  res.render('poll/listPoll', { data });
+
+  res.render('poll/listPoll', { data});
 });
 
 router.get('/createPoll', isLoggedIn, async (req, res) => {
@@ -44,7 +48,11 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
     multiplechoice: multipleC
 
   };
+  
   console.log("dia:", polls.date.getDay(), polls.date.getMonth(), polls.date.getDate());
+  var ddia=(polls.date.getDay()+ polls.date.getMonth()+ polls.date.getDate());
+  console.log("99999:",ddia)
+
   await pool.beginTransaction((err) => {
 
     if (err) { throw err; }
@@ -76,11 +84,11 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
             throw err;
           });
         }
-        codificar(polls);
+        //codificar(polls);
         console.log('Transaction Complete.');
 
-        res.redirect('/listPoll');
-        //res.redirect('/confir');
+        //res.redirect('/listPoll');
+        res.redirect('/confir');
       });
     });
 
@@ -92,18 +100,19 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
 
 });
 
-async function codificar(polls) {
+/*async function codificar(polls) {
 
   const idPoll = await pool.query("SELECT id from polls order by id desc limit 1");
   console.log("iP:", idPoll[0].id);
   console.log("Codigo: " + idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
   let alert=require("alert");
   alert("Codigo de Encuesta: "+ idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
+  return "koodigo"+idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate();
   
 
 
 
-}
+}*/
 router.get('/details', async (req, res) => {
   var query = url.parse(req.url, true).query;
   var condicion = "polls.id=responses.polls_id";

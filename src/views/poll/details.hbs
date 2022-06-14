@@ -41,13 +41,14 @@
             </div>
         </div>
         <div class="col-sm">
-            <div class="card">
-                    <button onclick="ocultar('top_x_div')">Grafico Histograma</button>
-            </div>
-            <div class="card">
+            <h3>Eliga Opcion de Grafico:</h3>
+            <!--<div class="card">-->
+                    <!--<button onclick="ocultar('top_x_div')">Grafico Histograma</button>-->
+            <!--</div>-->
+            <!--<div class="card">
                 <div class="card-body" id="top_x_div" style="width: 500px; height: 300px; display_none">
                 </div>
-            </div>
+            </div>-->
             <div class="card">
                 <button onclick="ocultar('piechart_3d')">Grafico de Torta 3D</button>
                 <div id="piechart_3d" style="width: 500px; height: 300px; display: none"></div>
@@ -56,20 +57,28 @@
                 <button onclick="ocultar('donutchart')">Grafico de dona</button>
                 <div id="donutchart" style="width: 500px; height: 300px;display: none"></div>
             </div>
+            <div class="card"><button onclick="ocultar('columnchart_values')">Grafico de Columnas</button>   </div>
+            
+            <div class="card"> 
+                <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+                <div id="columnchart_values" style="width: 500px; height: 300px;display:none"></div>
+            </div>
+            
         </div>
     </div>
 </div>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-    google.charts.load('current', { 'packages': ['bar'] });
-    google.charts.setOnLoadCallback(drawStuff);
-    google.charts.load('current', { 'packages': ['corechart'] });
-    google.charts.setOnLoadCallback(drawChart);
-    google.charts.load("current", { "packages": ["corechart"] });
-    google.charts.setOnLoadCallback(drawChart);
+
+    //google.charts.load('current', { 'packages': ['bar'] });
+    //google.charts.setOnLoadCallback(drawStuff);
+    //google.charts.load('current', { 'packages': ['corechart'] });
+    //google.charts.setOnLoadCallback(drawChart);
+    //google.charts.load("current", { "packages": ["corechart"] });
+    //google.charts.setOnLoadCallback(drawChart);
     //Histograma
-    function drawStuff() {
+    /*function drawStuff() {
         let responses = "{{responses}}";
         let array = responses.split(",");
         var resArray1 = new Array();
@@ -110,7 +119,7 @@
         var chart = new google.charts.Bar(document.getElementById('top_x_div'));
         chart.draw(data, google.charts.Bar.convertOptions(options));
         console.log(resArray2);
-    }
+    }*/
 
     //dona
     google.charts.load('current', { 'packages': ['corechart'] });
@@ -198,6 +207,79 @@
         //chart.draw(data, google.charts.Bar.convertOptions(options));
         console.log(resArray2);
     }
+    //Column
+    //Histograma
+    /*google.charts.load('current', { 'packages': ['bar'] });
+    google.charts.setOnLoadCallback(drawStuff);
+    function drawStuff() {
+        let responses = "{{responses}}";
+        let array = responses.split(",");
+        var resArray1 = new Array();
+        resArray1[0] = 'Respuesta';;
+        resArray1[1] = 'Voto';
+        let resArray2 = new Array();
+        resArray2[0] = resArray1;
+        let count = 0;
+        let j = 1;
+        resArray1 = new Array();
+        for (let i = 0; i < array.length; i++) {
+            if (count == 1) {
+                resArray1[count] = parseInt(array[i], 10);
+                resArray2[j] = resArray1;
+                count = 0;
+                j++;
+                resArray1 = new Array();
+            } else {
+                resArray1[count] = array[i];
+                count++;
+            }
+        }
+        var data = new google.visualization.arrayToDataTable(resArray2);
+        var options = {
+            width: 0,
+            height:200,
+            legend: { position: 'none' },
+            /*chart: {
+                title: "{{data.poll}}",
+                subtitle: 'Sistema Mini Encuestas'
+            },*/
+            /*axes: {
+                x: {
+                    0: { side: 'top', label: 'Para detalles posicionece sobre el grafico' } // Top x-axis.
+                }
+            },
+            bar: { groupWidth: "40%" }
+        };
+        var chart = new google.charts.Bar(document.getElementById('columnchart_values'));
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+        console.log(resArray2);
+    }*/
+    google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses', 'Profit'],
+          ['2014', 1000, 400, 200],
+          ['2015', 1170, 460, 250],
+          ['2016', 660, 1120, 300],
+          ['2017', 1030, 540, 350]
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Company Performance',
+            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+
+    
+    
     function ocultar(elemento) {
         var x = document.getElementById(elemento);
         if (x.style.display === "none") {
@@ -206,8 +288,7 @@
             x.style.display = "none";
         }
     }
-
-
-
-
 </script>
+
+ 
+
