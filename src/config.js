@@ -9,4 +9,3 @@ module.exports ={
     }
 }
 
-//https://phpmyadmin.alwaysdata.com/phpmyadmin/index.php?route=/sql&server=1&db=nicodevs_miniencuestas&table=user&pos=0

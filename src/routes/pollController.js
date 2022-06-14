@@ -191,6 +191,7 @@ router.post('/votes', [
   console.log("en el router. post /votes");
   if (!errors.isEmpty()) {
     res.render('poll/votes', { responses, poll, errors: errors.array() });
+    console.log("ENTRA AL RENDER");
   } else {
     
     const { response } = req.body;
