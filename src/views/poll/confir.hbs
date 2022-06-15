@@ -4,39 +4,15 @@
 
 <body>
     <h2>Encuesta creada</h2>
-    <h3>Codigo de encuesta{kodi} </h3>
-    <script>
-         const kodi = async function codificar() {
-
-        const date = new Date();
-        const idPoll = await pool.query("SELECT id from polls order by id desc limit 1");
-        console.log("iP:", idPoll[0].id);
-        console.log("Codigo: " + idPoll[0].id + date.getDay() + (date.getMonth() + 1) + date.getDate());
-
-        var codigo = 'CODIGO'+idPoll[0].id + date.getDay() + (date.getMonth() + 1) + date.getDate();
-        /*let alert=require("alert");
-        alert("Codigo de Encuesta: "+ idPoll[0].id + date.getDay() + (date.getMonth()+1) + date.getDate());*/
-        console.log("Codigo: ");
-        return codigo;
-
-    }
-    </script>
+    <h3>Codigo de encuesta: {{ob.anda}} </h3>
+    
 </body>
 <div>
     <h2>Encuesta creada</h2>
-    <h2>Titulo: {{Codigo}}</h2>
-    <h3>Codigo de encuesta  </h3><div id="resultado"></div>
+    <h2>Titulo: </h2>
+    
     
     
 
-    <script>
-      
-    
-    </script>
-   <script src="/src/public/js/codificar.js">
-    const coco = codificar()
-    console.log(coco)
-   
-   </script> 
 </div>
     

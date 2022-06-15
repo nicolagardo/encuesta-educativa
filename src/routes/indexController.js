@@ -57,12 +57,33 @@ router.get('/slider',async(req,res)=>{
 
 
 });
-/*
-router.get('/confir',async(req,res)=>{
+router.get('/confir', async (req, res) => {
     //codificar.codificar(polls);
-    res.render('poll/confir');
+    const polls={
+        date: new Date()
+    };
+    
+    const esperandoACofificar = await codificar(polls)
+    
+     const ob = {
+         anda: esperandoACofificar
+    }
 
+    res.render('poll/confir',{ob});
+  
 
-});*/
+});
+async function codificar(polls) {
+
+    const idPoll = await pool.query("SELECT id from polls order by id desc limit 1");
+    console.log("iP:", idPoll[0].id);
+    console.log("Codigo_kode: " + idPoll[0].id + polls.date.getDay() + (polls.date.getMonth() + 1) + polls.date.getDate());
+    //let alert = require("alert");
+   // alert("Codigo de Encuesta: " + idPoll[0].id + polls.date.getDay() + (polls.date.getMonth() + 1) + polls.date.getDate());
+   // return "koodigo" + idPoll[0].id + polls.date.getDay() + (polls.date.getMonth() + 1) + polls.date.getDate();
+     var kde=`${idPoll[0].id }${ polls.date.getDay()}${ (polls.date.getMonth() + 1) }${ polls.date.getDate()}`;
+     return kde;
+
+}
 module.exports = router;
 

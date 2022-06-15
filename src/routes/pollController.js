@@ -12,10 +12,10 @@ router.get('/listPoll', async (req, res) => {
   let data = {};
   var query = url.parse(req.url, true).query;
   if (undefined == query.filtrar) {
-    console.log("req.user.id: ",req.user.id );
+    //console.log("req.user.id: ",req.user.id );
     listPoll = await pool.query('SELECT * FROM polls WHERE user_id = ?', [req.user.id]);
   } else {
-    console.log("aca entonces");
+   // console.log("aca entonces");
     listPoll = await pool.query('SELECT * FROM polls WHERE user_id = ? AND poll LIKE ?', [req.user.id, '%' + query.filtrar + '%']);
   }
   const usuarioId = req.user.id;
@@ -37,7 +37,7 @@ router.get('/createPoll', isLoggedIn, async (req, res) => {
 });
 
 router.post('/createPoll', isLoggedIn, async (req, res) => {
-  console.log(" QUE JORACA ES ESTO: ",req.body);
+  //console.log(" QUE JORACA ES ESTO: ",req.body);
   const { poll, response } = req.body;
   let responses = response.length;
   let multipleC = req.body.multiplechoice;
@@ -49,30 +49,30 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
     multiplechoice: multipleC
 
   };
-  console.log("dia:", polls.date.getDay(), polls.date.getMonth(), polls.date.getDate());
+  //console.log("dia:", polls.date.getDay(), polls.date.getMonth(), polls.date.getDate());
   await pool.beginTransaction((err) => {
 
     if (err) { throw err; }
     pool.query('INSERT INTO polls SET ?', polls, (err, result) => {
       if (err) {
-        console.log("ERRRRRRRRRRRROR",err);
+        //console.log("ERRRRRRRRRRRROR",err);
         pool.rollback(() => {
           throw err
           console.log("ESTE ES EL ERROR: ",err);;
         });
       }
-      console.log("result ",result);
+      //console.log("result ",result);
 
       var polls_id = result.insertId;
-      console.log("polls_id ",polls_id);
-      console.log("response ",response);
+      //console.log("polls_id ",polls_id);
+      //console.log("response ",response);
       response.forEach(element => {
         let res = {
           response: element,
           votes: 0,
           polls_id: polls_id
         };
-        console.log("RES: ",res);
+        //console.log("RES: ",res);
         pool.query('INSERT INTO responses SET ?', res, (err, result) => {
           if (err) {
             pool.rollback(() => {
@@ -87,13 +87,11 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
             throw err;
           });
         }
-        codificar(polls);
-        const codiguito = codificar(polls);
-        console.log("Test de codigo: ", codiguito.promise());
+       
         console.log('Transaction Complete.');
         
 
-        res.redirect('/listPoll');
+        res.redirect('/confir');
         //res.redirect('/confir');
       });
       
@@ -107,24 +105,6 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
 
 });
 
-async function codificar(polls) {
-
-  const idPoll = await pool.query("SELECT id from polls order by id desc limit 1");
-  console.log("iP:", idPoll[0].id);
-  const date = new Date();
-  console.log(date);
-  console.log("Codigo: " + idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
-  const codigoJuego = "Codigo: " + idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate();
-  let alert=require('alert')
-  alert("Codigo de Encuesta: "+ idPoll[0].id + polls.date.getDay() + (polls.date.getMonth()+1) + polls.date.getDate());
-  return codigoJuego;
-
-
-
-
-
-
-}
 
 
 //let socket = io()
@@ -174,7 +154,7 @@ router.get('/votes', async (req, res) => {
   if (0 < inscription.length) {
     value = true;
   }
-  console.log(responses);
+  //console.log(responses);
   poll = query.poll;
   if (multiple == 1) {
     res.render('poll/multiplechoice', { responses, poll, value, multiple });
@@ -188,14 +168,14 @@ router.post('/votes', [
   check('response').not().isEmpty().withMessage('Seleccionar una opción')
 ], async (req, res) => {
   const errors = validationResult(req);
-  console.log("en el router. post /votes");
+  //console.log("en el router. post /votes");
   if (!errors.isEmpty()) {
     res.render('poll/votes', { responses, poll, errors: errors.array() });
-    console.log("ENTRA AL RENDER");
+    //console.log("ENTRA AL RENDER");
   } else {
     
     const { response } = req.body;
-    console.log("response: ", response);
+    //console.log("response: ", response);
     let responses = await pool.query("SELECT * FROM responses WHERE id =?", [response]);
     console.log("ACA PODRIA EMITIR EL EVENTO Socket");
     let vote = responses[0].votes;
@@ -204,7 +184,7 @@ router.post('/votes', [
     let response_id = parseInt(response, 10);
     let data = [vote, response_id];
     await pool.beginTransaction((err) => {
-      console.log("DATAAAAAAAA: ", data);
+      //console.log("DATAAAAAAAA: ", data);
       pool.query('UPDATE responses SET votes = ? WHERE id =?', data, (err, result) => {
         if (err) {
           pool.rollback(() => {
@@ -261,14 +241,14 @@ router.post('/multiplechoice', [
       res.redirect('/details?id=' + response);
     });
   }
-  console.log(req.body);
+  //console.log(req.body);
 
 });
  async function cargarMultiple(respuesta, userid) {
   console.log("usuario", userid);
 
   let responses = await pool.query("SELECT * FROM responses WHERE id =?", respuesta);
-  console.log("Res:", responses[0]);
+  //console.log("Res:", responses[0]);
   let vote = responses[0].votes;
   var respon = responses[0].response;
   vote++;
