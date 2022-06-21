@@ -3,14 +3,19 @@ const router = express.Router();
 const { isLoggedIn } = require('../lib/auth');
 const pool = require('../connection');
 const { paginator } = require('../lib/paginator');
-const { check, validationResult } = require('express-validator');
+const { check, validationResult, body } = require('express-validator');
 var url = require('url');
 //const io = require("socket.io-client");
 
 router.get('/listPoll', async (req, res) => {
-  let listPoll;
+  // console.log('====================================');
+  // console.log(req.body);
+  // // console.log(req);
+  // console.log('====================================');
+  
   let data = {};
   var query = url.parse(req.url, true).query;
+ 
   if (undefined == query.filtrar) {
     //console.log("req.user.id: ",req.user.id );
     listPoll = await pool.query('SELECT * FROM polls WHERE user_id = ?', [req.user.id]);
@@ -19,9 +24,13 @@ router.get('/listPoll', async (req, res) => {
     listPoll = await pool.query('SELECT * FROM polls WHERE user_id = ? AND poll LIKE ?', [req.user.id, '%' + query.filtrar + '%']);
   }
   const usuarioId = req.user.id;
+console.log('====================================');
+console.log('');
+console.log('====================================');
   data = await pool.query(`SELECT * FROM polls WHERE user_id =${usuarioId}`)
+ 
   if (0 < listPoll.length) {
-    data = paginator(listPoll, req.query.pagina, 1, "/listPoll", "");
+    data = paginator(listPoll, req.query.pagina, 3, "/listPoll", "");
   } else {
     data = {
       pagi_info: "No hay datos que mostrar",
@@ -34,6 +43,41 @@ router.get('/listPoll', async (req, res) => {
 router.get('/createPoll', isLoggedIn, async (req, res) => {
 
   res.render('poll/creaatePoll');
+});
+router.post('/listPoll', async (req, res) => {
+  // console.log('====================================');
+  // console.log('req.body');
+  // console.log(req.body);
+  // console.log(req.body.cerrar);
+  // console.log('====================================');
+  idPoll = req.body.cerrar;
+
+  estado_poll = await pool.query(`SELECT estado_poll FROM polls WHERE user_id = ? AND id = ${idPoll}`, [req.user.id, '%'])
+
+ 
+  console.log("estado_poll: ",estado_poll[0].estado_poll)
+  const estado = estado_poll[0].estado_poll === 1 ? 0 : 1
+  const cerrarEncuesta = function cerrarEncuesta(e){
+    
+    
+
+  }
+  const resp = {
+    estado_poll :  estado
+  }
+  
+  // console.log('====================================');
+  // console.log("res: ", resp);
+  // console.log('====================================');
+  pool.query('UPDATE polls SET estado_poll  = ? WHERE user_id = ? AND id = ?', [ resp.estado_poll, req.user.id, idPoll], (err, result) => {
+    if (err) {
+      pool.rollback(() => {
+        throw err;
+      });
+    }
+  });
+
+  res.redirect('/listPoll');
 });
 
 router.post('/createPoll', isLoggedIn, async (req, res) => {
@@ -112,7 +156,7 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
 router.get('/details', async (req, res) => {
   var query = url.parse(req.url, true).query;
   var condicion = "polls.id=responses.polls_id";
-  var campos = "polls.id,polls.poll,polls.responses,polls.user_id,polls.date,polls.multiplechoice"
+  var campos = "polls.id,polls.poll,polls.responses,polls.user_id,polls.date,polls.multiplechoice, polls.estado_poll"
     + ",responses.response,responses.votes";
   const listPoll = await pool.query("SELECT " + campos + " FROM polls Inner Join responses ON " + condicion + " WHERE polls.id =?", [query.id]);
   //let multiple= await pool.query("SELECT multiplechoice FROM polls WHERE polls.id =?", [query.id]);
@@ -132,6 +176,9 @@ router.get('/details', async (req, res) => {
   responses = JSON.parse(responses);
   //console.log("valor: ",responses);
   var data = listPoll[0];
+  // console.log('====================================');
+  // console.log(data);
+  // console.log('====================================');
   var multiple = listPoll[0].multiplechoice;
 
   res.render('poll/details', { data, responses, votes, multiple });
@@ -175,7 +222,7 @@ router.post('/votes', [
   } else {
     
     const { response } = req.body;
-    //console.log("response: ", response);
+    console.log("req.body: ", req.body);
     let responses = await pool.query("SELECT * FROM responses WHERE id =?", [response]);
     console.log("ACA PODRIA EMITIR EL EVENTO Socket");
     let vote = responses[0].votes;

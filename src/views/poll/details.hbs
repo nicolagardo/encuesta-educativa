@@ -32,10 +32,12 @@
                             <p>votos</p>
                         </div>
                         <div class="row">
+                            {{#if data.estado_poll}}
                             <a class="btn btn-info"
                                 href="/votes?id={{data.id}}&poll={{data.poll}}&multiple={{multiple}}">
                                 Realizar votos
                             </a>
+                            {{/if}}
                         </div>
                     </div>
                 </div>
