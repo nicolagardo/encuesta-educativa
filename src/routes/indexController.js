@@ -37,7 +37,7 @@ router.get('/slider',async(req,res)=>{
 
 
 });
-router.get('/slider',async(req,res)=>{
+router.get('/slider2',async(req,res)=>{
     res.render('partials/slider2');
 
 
@@ -85,5 +85,10 @@ async function codificar(polls) {
      return kde;
 
 }
+router.get('/about',async(req,res)=>{
+    res.render('partials/about');
+
+
+});
 module.exports = router;
 

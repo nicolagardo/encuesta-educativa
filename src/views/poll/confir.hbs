@@ -1,18 +1,104 @@
+<style>
+    #fondo {
+        background-image: url("https://cdn.pixabay.com/photo/2015/08/26/07/03/background-908172_960_720.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+
+    }
+
+    .modal-content2 {
+        top: 5cm;
+        left: 9cm;
+
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        width: 50%;
+        pointer-events: auto;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 0.3rem;
+        outline: 0;
+    }
+
+    .modal-header2 {
+        top: 2cm;
+        
+        margin-left: 8%;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: start;
+        align-items: flex-start;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        padding: 1rem 1rem;
+        border-bottom: 1px solid #dee2e6;
+        border-top-left-radius: 0.3rem;
+        border-top-right-radius: 0.3rem;
+    }
+
+    #modal-title2 {
+       margin-left: 30%;
+        margin-bottom: 0;
+        line-height: 1.5;
+    }
+</style>
+
+<body id="fondo">
+    <center>
+        <h2>Encuesta creada</h2>
+    </center>
+    <center>
+        <h3>Para poder visualizar la Encuesta en el Buscador</h3>
+    </center>
+    <center>
+        <h4>Guarde el Siguiente Codigo</h4>
+    </center>
+
+    <!--<h3>Codigo de encuesta: {{ob.anda}} </h3>-->
+
+    <center> <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="">Ver
+            Codigo</button></center>
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document"></div>
+        <div class="modal-content2">
+            <div class="modal-header2" id="modal-title2">
+                <center>
+                    <h4>Codigo de la Encuesta</h4>
+                </center>
 
 
+            </div>
+            <div class="modal-body">
+                <center>
+                    <h3 id="titlePoll">{{ob.anda}} </h3>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <center><button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button></center>
 
+            </div>
+        </div>
+    </div>
 
-<body>
-    <h2>Encuesta creada</h2>
-    <h3>Codigo de encuesta: {{ob.anda}} </h3>
-    
 </body>
-<div>
-    <h2>Encuesta creada</h2>
-    <h2>Titulo: </h2>
-    
-    
-    
 
-</div>
-    
+
+
+
+
+
+
+
+
+
+
+
