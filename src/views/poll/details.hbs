@@ -1,14 +1,22 @@
 <body id="fondo">
-    
-</body>
-<style> 
-    #fondo{
-        background-image: url("https://cdn.pixabay.com/photo/2015/08/26/07/03/background-908172_960_720.jpg");
-		background-repeat: no-repeat;
-		background-size: cover;
-		background-position: center;
-		background-attachment: fixed;
 
+</body>
+<style>
+    #fondo {
+        background-image: url("https://cdn.pixabay.com/photo/2015/08/26/07/03/background-908172_960_720.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+
+    }
+    #etiqueta{
+        display: block;
+        
+        
+    }
+    #grafico{
+        display: none;
     }
 </style>
 <div class="container" id="fondo">
@@ -23,14 +31,16 @@
                         <div class="row">
                             <p>{{data.responses}}</p>
                             &nbsp;
-                            <p>opciones</p>
+                            <p>Respuestas</p>
                         </div>
-                        <div class="row">
-                            <p id="votoss">{{votes}}</p>
-                           
-                            &nbsp;
-                            <p>votos</p>
-                        </div>
+                        <ul class="row" id="etiqueta">
+                            {{#each responses}}
+
+                            <li>{{this}}</li>
+                            {{/each}}
+                        </ul>
+
+
                         <div class="row">
                             {{#if data.estado_poll}}
                             <a class="btn btn-info"
@@ -44,11 +54,12 @@
             </div>
         </div>
         <div class="col-sm">
+            
+            
             <div class="card">
-                    <button onclick="ocultar('top_x_div')">Grafico Histograma</button>
-            </div>
-            <div class="card">
+                <button onclick="ocultar('top_x_div')">Grafico Histograma</button>
                 <div class="card-body" id="top_x_div" style="width: 500px; height: 300px; display_none">
+                    
                 </div>
             </div>
             <div class="card">
@@ -59,27 +70,40 @@
                 <button onclick="ocultar('donutchart')">Grafico de dona</button>
                 <div id="donutchart" style="width: 500px; height: 300px;display: none"></div>
             </div>
+            <script>
+                function mostrar(){
+                    document.getElementById('top_x_div').style.display='block';
+
+                }
+                function okultar(){
+                    document.getElementById('top_x_div').style.display='none';
+
+                }
+
+            </script>
         </div>
     </div>
 
 </div>
- {{!-- <script src="/socket.io/socket.io.js"></script> --}}
+{{!--
+<script src="/socket.io/socket.io.js"></script> --}}
 <script>
     //let socket =io()
     //console.log("En votes: ", {{votes}})
     //socket.emit('votook', 'alguien esta por votar');
-    
+
 </script>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-{{!-- <script src="socket.io/socket.io.js"></script> --}}
+{{!--
+<script src="socket.io/socket.io.js"></script> --}}
 <script type="text/javascript">
     google.charts.load('current', { 'packages': ['bar'] });
     google.charts.setOnLoadCallback(drawStuff);
-    google.charts.load('current', { 'packages': ['corechart'] });
+    /*google.charts.load('current', { 'packages': ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
     google.charts.load("current", { "packages": ["corechart"] });
-    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawChart);*/
     //Histograma
     function drawStuff() {
         let responses = "{{responses}}";
