@@ -130,7 +130,7 @@ router.get('/details', async (req, res) => {
   }
   let responses = JSON.stringify(responses2);
   responses = JSON.parse(responses);
-  //console.log("valor: ",responses);
+  console.log("valor: ",listPoll[0]);
   var data = listPoll[0];
   var multiple = listPoll[0].multiplechoice;
 
@@ -229,22 +229,85 @@ router.post('/multiplechoice', [
     //editar aca
     const { response } = req.body;
     console.log("response en multiplechoice ", response);
-    response.forEach(respuesta => {
-      cargarMultiple(respuesta);
-    })
+    try {
+      response.forEach(respuesta => {
+        //cargarMultiple(respuesta);
+        try {
+          
+          cargarMultiple(respuesta, req.user.id);
+  
+        } catch (error) {
+          //cargarMultiple(respuesta, 0);
+          //recordar colocar id de usuario generico
+          cargarMultiple(respuesta, 15);
+        }
+        
+        
+      })
+      
+    } catch (error) {
+      try {
+          
+        cargarMultiple(response, req.user.id);
+
+      } catch (error) {
+        //cargarMultiple(respuesta, 0);
+        //recordar colocar id de usuario generico
+        cargarMultiple(response, 15);
+      }
+      
+    }
+    
     pool.commit((err) => {
       if (err) {
         pool.rollback(() => {
           throw err;
         });
       }
-      res.redirect('/details?id=' + response);
+      res.redirect('/details?id=' + responses[0].polls_id);
+      //res.redirect('/details?id=' + response);
     });
   }
   //console.log(req.body);
 
 });
- async function cargarMultiple(respuesta, userid) {
+async function cargarMultiple(respuesta, userid) {
+  console.log("usuario", userid);
+
+  let responses = await pool.query("SELECT * FROM responses WHERE id =?", respuesta);
+  console.log("Res:", responses[0]);
+  let vote = responses[0].votes;
+  var respon = responses[0].response;
+  vote++;
+  let response_id = parseInt(respuesta, 10);
+  let data = [vote, response_id];
+  await pool.beginTransaction((err) => {
+    pool.query('UPDATE responses SET votes = ? WHERE id =?', data, (err, result) => {
+      if (err) {
+        pool.rollback(() => {
+          throw err;
+        });
+      }
+      let res = {
+        poll_id: poll_id,
+        user_id: userid,
+        response: respon,
+        response_id: response_id,
+        date: new Date()
+      };
+      pool.query('INSERT INTO inscriptions SET ?', res, (err, result) => {
+        if (err) {
+          pool.rollback(() => {
+            throw err;
+          });
+        }
+      });
+    });
+
+  });
+
+}
+ /*async function cargarMultiple(respuesta, userid) {
   console.log("usuario", userid);
 
   let responses = await pool.query("SELECT * FROM responses WHERE id =?", respuesta);
@@ -279,7 +342,7 @@ router.post('/multiplechoice', [
 
   });
 
-}
+}*/
 router.get('/delete/:id', async (req, res) => {
   const { id } = req.params;
   await pool.beginTransaction((err) => {
