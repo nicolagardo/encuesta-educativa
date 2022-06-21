@@ -1,4 +1,4 @@
-/*module.exports ={
+module.exports ={
     database:{
         connectionLimit: 10,
         host: 'mysql-nicodevs.alwaysdata.net',
@@ -7,7 +7,8 @@
         password: '3pZ..52kB2H6hBc',
         database: 'nicodevs_miniencuestas'
     }
-}*/
+}
+/*
 module.exports ={
     database:{
         connectionLimit: 10,
@@ -17,4 +18,4 @@ module.exports ={
         database: 'encuestas'
     }
 }
-
+*/
