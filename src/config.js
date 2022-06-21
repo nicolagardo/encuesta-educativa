@@ -8,6 +8,8 @@ module.exports ={
         database: 'nicodevs_miniencuestas'
     }
 }
+
+
 /*
 module.exports ={
     database:{
