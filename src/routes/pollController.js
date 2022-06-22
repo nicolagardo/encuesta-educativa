@@ -29,7 +29,7 @@ console.log('');
 console.log('====================================');
   data = await pool.query(`SELECT * FROM polls WHERE user_id =${usuarioId}`)
  
-  if (0 > listPoll.length) {
+  if (0 < listPoll.length) {
     data = paginator(listPoll, req.query.pagina, 3, "/listPoll", "");
   } else {
     data = {
