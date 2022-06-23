@@ -24,7 +24,7 @@ router.get('/',async(req,res)=>{
         }
     }
     if (0 < listPoll.length){
-        data = paginator(listPoll, req.query.pagina, 3, "/", "");
+        data = paginator(listPoll, req.query.pagina, 3, "", "");
     }else{
         data = {
             pagi_info: "No hay datos que mostrar",
