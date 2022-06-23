@@ -44,7 +44,7 @@ router.get('/createPoll', isLoggedIn, async (req, res) => {
 
   res.render('poll/creaatePoll');
 });
-router.post('/listPoll', async (req, res) => {
+router.post('listPoll', async (req, res) => {
   // console.log('====================================');
   // console.log('req.body');
   // console.log(req.body);
