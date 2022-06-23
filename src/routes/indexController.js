@@ -9,11 +9,9 @@ router.get('/',async(req,res)=>{
     var listPoll;
     let data = {};
     var query = url.parse(req.url, true).query;
-    if (undefined == query.filtrar){
-        console.log('primer if');
-        listPoll = await pool.query('SELECT * FROM polls', [0]);
-      
-    }else{
+    
+
+    if (query.filtrar){
         listPoll = await pool.query('SELECT * FROM polls WHERE poll LIKE ?', ['%' +query.filtrar+ '%']);
         console.log("LiP:",listPoll);
         if (listPoll.length<=0) {
@@ -22,14 +20,26 @@ router.get('/',async(req,res)=>{
             console.log("LiP numero:",listPoll);
             
         }
-    }
-    if (0 < listPoll.length){
-        data = paginator(listPoll, req.query.pagina, 3, "", "");
+        if (0 < listPoll.length){
+            data = paginator(listPoll, req.query.pagina, 3, "", "");
+            console.log('====================================');
+            console.log(data);
+            console.log('====================================');
+        }else{
+            data = {
+                pagi_info: "No hay datos que mostrar",
+              };
+        }
+      
     }else{
+        listPoll = 0;
         data = {
-            pagi_info: "No hay datos que mostrar",
+            pagi_info: "No se encontraron coinicidencias",
           };
+    
+       
     }
+    
     res.render('index/index', { data });
 });
 router.get('/slider',async(req,res)=>{

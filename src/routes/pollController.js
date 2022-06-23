@@ -77,7 +77,7 @@ router.post('listPoll', async (req, res) => {
     }
   });
 
-  res.redirect('poll/listPoll');
+  res.redirect('/listPoll');
 });
 
 router.post('/createPoll', isLoggedIn, async (req, res) => {

@@ -46,7 +46,7 @@ require('./lib/passport');
 app.set('views', path.join(__dirname, 'views'));
 //console.log(app.set('views', path.join(__dirname, 'views')));
 
-console.log('__dirname',__dirname);
+// console.log('__dirname',__dirname);
 app.engine('.hbs', exphbs({
   defaultLayout: 'main',
   layoutsDir: path.join(app.get('views'), 'layouts'),
