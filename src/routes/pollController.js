@@ -286,7 +286,7 @@ router.post('/multiplechoice', [
         } catch (error) {
           //cargarMultiple(respuesta, 0);
           //recordar colocar id de usuario generico
-          cargarMultiple(respuesta, 16);
+          cargarMultiple(respuesta, 22);
         }
         
         
@@ -300,7 +300,7 @@ router.post('/multiplechoice', [
       } catch (error) {
         //cargarMultiple(respuesta, 0);
         //recordar colocar id de usuario generico
-        cargarMultiple(response, 16);
+        cargarMultiple(response, 22);
       }
       
     }
