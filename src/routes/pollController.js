@@ -24,9 +24,7 @@ router.get('/listPoll', async (req, res) => {
     listPoll = await pool.query('SELECT * FROM polls WHERE user_id = ? AND poll LIKE ?', [req.user.id, '%' + query.filtrar + '%']);
   }
   const usuarioId = req.user.id;
-console.log('====================================');
-console.log('');
-console.log('====================================');
+
   data = await pool.query(`SELECT * FROM polls WHERE user_id =${usuarioId}`)
  
   if (0 < listPoll.length) {
@@ -44,24 +42,20 @@ router.get('/createPoll', isLoggedIn, async (req, res) => {
 
   res.render('poll/creaatePoll');
 });
-router.post('listPoll', async (req, res) => {
-  // console.log('====================================');
+router.post('/listPoll', async (req, res) => {
+  console.log('====================================');
   // console.log('req.body');
   // console.log(req.body);
-  // console.log(req.body.cerrar);
+  console.log(req.body.cerrar);
   // console.log('====================================');
-  idPoll = req.body.cerrar;
+  const idPoll = req.body.cerrar;
 
   estado_poll = await pool.query(`SELECT estado_poll FROM polls WHERE user_id = ? AND id = ${idPoll}`, [req.user.id, '%'])
 
  
-  console.log("estado_poll: ",estado_poll[0].estado_poll)
+  //console.log("estado_poll: ",estado_poll[0].estado_poll)
   const estado = estado_poll[0].estado_poll === 1 ? 0 : 1
-  const cerrarEncuesta = function cerrarEncuesta(e){
-    
-    
 
-  }
   const resp = {
     estado_poll :  estado
   }
@@ -272,38 +266,21 @@ router.post('/multiplechoice', [
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     res.render('poll/multiplechoice', { responses, poll, errors: errors.array() });
-  } else {
+  } else 
+  {
     //editar aca
     const { response } = req.body;
+    console.log('====================================');
+    console.log(response.length);
+    console.log('====================================');
     console.log("response en multiplechoice ", response);
-    try {
-      response.forEach(respuesta => {
-        //cargarMultiple(respuesta);
-        try {
-          
-          cargarMultiple(respuesta, req.user.id);
-  
-        } catch (error) {
-          //cargarMultiple(respuesta, 0);
-          //recordar colocar id de usuario generico
-          cargarMultiple(respuesta, 22);
-        }
-        
-        
-      })
-      
-    } catch (error) {
-      try {
-          
-        cargarMultiple(response, req.user.id);
-
-      } catch (error) {
-        //cargarMultiple(respuesta, 0);
-        //recordar colocar id de usuario generico
-        cargarMultiple(response, 22);
-      }
-      
-    }
+    response.length > 2 ? console.log("response es uno"): console.log("response es mayor a uno");;
+    req.user.id ? response.forEach(respuesta => {
+      cargarMultiple(respuesta, req.user.id)
+    }):response.forEach(respuesta => {
+      cargarMultiple(respuesta, 22)
+    });
+    
     
     pool.commit((err) => {
       if (err) {
@@ -321,34 +298,37 @@ router.post('/multiplechoice', [
 async function cargarMultiple(respuesta, userid) {
   console.log("usuario", userid);
 
-  let responses = await pool.query("SELECT * FROM responses WHERE id =?", respuesta);
-  console.log("Res:", responses[0]);
+  let responses = await pool.query("SELECT votes, id FROM responses WHERE id =?", respuesta);
+  console.log("Res:", responses);
   let vote = responses[0].votes;
-  var respon = responses[0].response;
+  //var respon = responses[0].response;
   vote++;
   let response_id = parseInt(respuesta, 10);
   let data = [vote, response_id];
-  await pool.beginTransaction((err) => {
+  pool.beginTransaction(() => {
     pool.query('UPDATE responses SET votes = ? WHERE id =?', data, (err, result) => {
       if (err) {
         pool.rollback(() => {
+          console.log('====================================');
+          console.log(err);
+          console.log('====================================');
           throw err;
         });
       }
-      let res = {
-        poll_id: poll_id,
-        user_id: userid,
-        response: respon,
-        response_id: response_id,
-        date: new Date()
-      };
-      pool.query('INSERT INTO inscriptions SET ?', res, (err, result) => {
-        if (err) {
-          pool.rollback(() => {
-            throw err;
-          });
-        }
-      });
+      // let res = {
+      //   poll_id: poll_id,
+      //   user_id: userid,
+      //   response: respon,
+      //   response_id: response_id,
+      //   date: new Date()
+      // };
+      // pool.query('INSERT INTO inscriptions SET ?', res, (err, result) => {
+      //   if (err) {
+      //     pool.rollback(() => {
+      //       throw err;
+      //     });
+      //   }
+      // });
     });
 
   });
