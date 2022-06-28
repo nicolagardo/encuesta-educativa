@@ -87,6 +87,9 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
     multiplechoice: multipleC
 
   };
+  console.log('====================================');
+  console.log("MULTIPLECHOICE: ", multipleC);
+  console.log('====================================');
   //console.log("dia:", polls.date.getDay(), polls.date.getMonth(), polls.date.getDate());
   await pool.beginTransaction((err) => {
 
@@ -99,6 +102,12 @@ router.post('/createPoll', isLoggedIn, async (req, res) => {
           console.log("ESTE ES EL ERROR: ",err);;
         });
       }
+      console.log('====================================');
+      console.log("result:", result);
+      console.log('====================================');
+      console.log('====================================');
+      console.log("err: ", err);
+      console.log('====================================');
       //console.log("result ",result);
 
       var polls_id = result.insertId;
@@ -270,11 +279,14 @@ router.post('/multiplechoice', [
   {
     //editar aca
     const { response } = req.body;
+    const testDeRespons = parseInt(response, 10)
+
     console.log('====================================');
     console.log(response.length);
     console.log('====================================');
-    console.log("response en multiplechoice ", response);
-    response.length > 2 ? console.log("response es uno"): console.log("response es mayor a uno");;
+    console.log("response en multiplechoice ", testDeRespons);
+    console.log("typeof response en multiplechoice ", typeof(response));
+    typeof(testDeRespons) === Number ? console.log("response es uno"): console.log("response es mayor a uno");;
     req.user.id ? response.forEach(respuesta => {
       cargarMultiple(respuesta, req.user.id)
     }):response.forEach(respuesta => {
