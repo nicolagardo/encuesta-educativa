@@ -280,25 +280,34 @@ router.post('/multiplechoice', [
     //editar aca
     const { response } = req.body;
     const testDeRespons = parseInt(response, 10)
-
+    console.log('====================================');
+    console.log("typeof: ", typeof(req.user));
+    console.log('====================================');
+    console.log('====================================');
+    console.log("USER: ", req.user);
+    console.log('====================================');
+    const idUser = req.user !== undefined ? req.user.id : 22;
     console.log('====================================');
     console.log(response.length);
     console.log('====================================');
     console.log("response en multiplechoice ", testDeRespons);
     console.log("typeof response en multiplechoice ", typeof(response));
     typeof(testDeRespons) === Number ? console.log("response es uno"): console.log("response es mayor a uno");
+    console.log('====================================');
+    console.log(`req.user.id: ${idUser}`);
+    console.log('====================================');
 
     try {
-      req.user.id ? response.forEach(respuesta => {
-        cargarMultiple(respuesta, req.user.id)
+      idUser ? response.forEach(respuesta => {
+        cargarMultiple(respuesta, idUser)
       }):response.forEach(respuesta => {
         cargarMultiple(respuesta, 22)
       });
       
       
     } catch (error) {
-      req.user.id ?
-        cargarMultiple(response, req.user.id)
+      idUser ?
+        cargarMultiple(response, idUser)
       
         :cargarMultiple(response, 22)
       
