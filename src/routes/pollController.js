@@ -286,13 +286,24 @@ router.post('/multiplechoice', [
     console.log('====================================');
     console.log("response en multiplechoice ", testDeRespons);
     console.log("typeof response en multiplechoice ", typeof(response));
-    typeof(testDeRespons) === Number ? console.log("response es uno"): console.log("response es mayor a uno");;
-    req.user.id ? response.forEach(respuesta => {
-      cargarMultiple(respuesta, req.user.id)
-    }):response.forEach(respuesta => {
-      cargarMultiple(respuesta, 22)
-    });
-    
+    typeof(testDeRespons) === Number ? console.log("response es uno"): console.log("response es mayor a uno");
+
+    try {
+      req.user.id ? response.forEach(respuesta => {
+        cargarMultiple(respuesta, req.user.id)
+      }):response.forEach(respuesta => {
+        cargarMultiple(respuesta, 22)
+      });
+      
+      
+    } catch (error) {
+      req.user.id ?
+        cargarMultiple(response, req.user.id)
+      
+        :cargarMultiple(response, 22)
+      
+    }
+   
     
     pool.commit((err) => {
       if (err) {
