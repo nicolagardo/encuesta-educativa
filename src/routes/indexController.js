@@ -50,12 +50,12 @@ router.get('/slider2',async(req,res)=>{
 
 
 });
-router.get('/slider',async(req,res)=>{
+router.get('/slider3',async(req,res)=>{
     res.render('partials/slider3');
 
 
 });
-router.get('/slider',async(req,res)=>{
+router.get('/slider4',async(req,res)=>{
     res.render('partials/slider4');
 
 
@@ -64,7 +64,16 @@ router.get('/slider',async(req,res)=>{
     res.render('partials/slider5');
 
 
+
 });
+router.get('/sliderSugerencia',async(req,res)=>{
+    res.render('partials/sliderSugerencia');
+
+
+
+});
+
+
 router.get('/confir', async (req, res) => {
     //codificar.codificar(polls);
     const polls={
