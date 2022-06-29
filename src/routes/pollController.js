@@ -63,7 +63,7 @@ router.post('/listPoll', async (req, res) => {
   // console.log('====================================');
   // console.log("res: ", resp);
   // console.log('====================================');
-  pool.query('UPDATE polls SET estado_poll  = ? WHERE user_id = ? AND id = ?', [ resp.estado_poll, req.user.id, idPoll], (err, result) => {
+  await pool.query('UPDATE polls SET estado_poll  = ? WHERE user_id = ? AND id = ?', [ resp.estado_poll, req.user.id, idPoll], (err, result) => {
     if (err) {
       pool.rollback(() => {
         throw err;
