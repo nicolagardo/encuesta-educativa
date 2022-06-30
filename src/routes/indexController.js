@@ -60,9 +60,26 @@ router.get('/slider4',async(req,res)=>{
 
 
 });
-router.get('/slider',async(req,res)=>{
+router.get('/slider5',async(req,res)=>{
     res.render('partials/slider5');
 
+
+
+});
+router.get('/slider6',async(req,res)=>{
+    res.render('partials/slider6');
+
+
+
+});
+router.get('/slider7',async(req,res)=>{
+    res.render('partials/slider7');
+
+
+
+});
+router.get('/slider8',async(req,res)=>{
+    res.render('partials/slider8');
 
 
 });
