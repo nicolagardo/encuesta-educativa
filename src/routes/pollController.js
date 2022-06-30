@@ -43,10 +43,10 @@ router.get('/createPoll', isLoggedIn, async (req, res) => {
   res.render('poll/creaatePoll');
 });
 router.post('/listPoll', async (req, res) => {
-  console.log('====================================');
+  // console.log('====================================');
   // console.log('req.body');
   // console.log(req.body);
-  console.log(req.body.cerrar);
+  // console.log(req.body.cerrar);
   // console.log('====================================');
   const idPoll = req.body.cerrar;
 
@@ -63,7 +63,7 @@ router.post('/listPoll', async (req, res) => {
   // console.log('====================================');
   // console.log("res: ", resp);
   // console.log('====================================');
-  await pool.query('UPDATE polls SET estado_poll  = ? WHERE user_id = ? AND id = ?', [ resp.estado_poll, req.user.id, idPoll], (err, result) => {
+   pool.query('UPDATE polls SET estado_poll  = ? WHERE user_id = ? AND id = ?', [ resp.estado_poll, req.user.id, idPoll], (err, result) => {
     if (err) {
       pool.rollback(() => {
         throw err;
@@ -344,7 +344,7 @@ async function cargarMultiple(respuesta, userid) {
   vote++;
   let response_id = parseInt(respuesta, 10);
   let data = [vote, response_id];
-  pool.beginTransaction(() => {
+  await pool.beginTransaction(() => {
     pool.query('UPDATE responses SET votes = ? WHERE id =?', data, (err, result) => {
       if (err) {
         pool.rollback(() => {
