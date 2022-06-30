@@ -175,8 +175,15 @@ router.get('/details', async (req, res) => {
     votes += listPoll[i].votes;
     responses2[i] = responses1;
   }
+  console.log('====================================');
+  console.log("responses2: ", responses2);
+  console.log('====================================');
   let responses = JSON.stringify(responses2);
   responses = JSON.parse(responses);
+  console.log('====================================');
+  console.log("responses: ", responses);
+  console.log('====================================');  
+
   console.log("valor: ",listPoll[0]);
   var data = listPoll[0];
   // console.log('====================================');

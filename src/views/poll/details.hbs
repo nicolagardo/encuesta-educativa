@@ -36,7 +36,7 @@
                         <ul class="row" id="etiqueta">
                             {{#each responses}}
 
-                            <li>{{this}}</li>
+                            <li <!--class="list-group-item list-group-item-action list-group-item-light"-->{{this}}</li>
                             {{/each}}
                         </ul>
 
@@ -47,7 +47,16 @@
                                 href="/votes?id={{data.id}}&poll={{data.poll}}&multiple={{multiple}}">
                                 Realizar votos
                             </a>
+                            {{else}}
+                                <h3 class="alert alert-danger" role="alert">Encuesta cerrada</h3>
+                                {{#if_id data.id 7}}
+                                <div class="alert alert-info" role="alert">
+                                    <h3>La respuesta es: </h3><h2><bold>Matrix</bold></h2>
+                                </div>
+                                {{/if_id}}
+                               
                             {{/if}}
+                           
                         </div>
                     </div>
                 </div>
@@ -71,14 +80,7 @@
                 <div id="donutchart" style="width: 500px; height: 300px;display: none"></div>
             </div>
             <script>
-                function mostrar(){
-                    document.getElementById('top_x_div').style.display='block';
-
-                }
-                function okultar(){
-                    document.getElementById('top_x_div').style.display='none';
-
-                }
+               
 
             </script>
         </div>
