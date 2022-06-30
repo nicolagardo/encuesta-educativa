@@ -30,6 +30,7 @@ io.on('connection', socket => {
     socket.on('reload', msg => {
          console.log(`Mensaje: ${msg}`);
          io.emit('reload','hola, soy el server' )
+         
 
       })
   //  socket.on('votook', msg => {
@@ -37,6 +38,23 @@ io.on('connection', socket => {
   //       io.emit('votook', msg)
   //   }) 
   })
+  io.sockets.on("connection", function (socket) {
+     var address = socket.handshake.address; 
+     console.log("New connection from " + address.address + ":" + address.port); 
+    });
+
+  io.sockets.on('connection', function (socket) {
+    var socketId = socket.id;
+    var clientIp = socket.request.connection.remoteAddress;
+    const socketTest = socket.id
+  
+    console.log(`La ip es: ${clientIp}`);
+    console.log(`Esto es: ${socketTest}`);
+    console.log(`el socket id es: ${socketId}`);
+  });
+
+    
+
 
 
 
@@ -52,7 +70,18 @@ app.engine('.hbs', exphbs({
   layoutsDir: path.join(app.get('views'), 'layouts'),
   partialsDir: path.join(app.get('views'), 'partials'),
   extname: '.hbs',
+  helpers:{
+    if_id: function(a, b, opts) {
+      if (a == b) {
+          return opts.fn(this)
+      } else {
+          return opts.inverse(this)
+      }
+  }
+}
 }));
+
+
 // app.get('/', (req, res) => {
 //   res.sendFile(`${__dirname}/main`)
 // })
