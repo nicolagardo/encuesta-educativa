@@ -45,12 +45,16 @@ io.on('connection', socket => {
 
   io.sockets.on('connection', function (socket) {
     var socketId = socket.id;
-    var clientIp = socket.request.connection.remoteAddress;
+    var clientIp = socket.client.request
     const socketTest = socket.id
   
     console.log(`La ip es: ${clientIp}`);
     console.log(`Esto es: ${socketTest}`);
     console.log(`el socket id es: ${socketId}`);
+    const socketCount = io.of("/").sockets.size;
+    console.log('====================================');
+    console.log("Usuarios conectados: ",socketCount);
+    console.log('====================================');
   });
 
     
