@@ -5,15 +5,13 @@ const { paginator } = require('../lib/paginator');
 var url = require('url');
 
 router.get('/',async(req,res)=>{
-    console.log('en el home');
+    
     var listPoll;
     let data = {};
     var query = url.parse(req.url, true).query;
-    if (undefined == query.filtrar){
-        console.log('primer if');
-        listPoll = await pool.query('SELECT * FROM polls', [0]);
-        console.log('listPOll',listPoll);
-    }else{
+    
+
+    if (query.filtrar){
         listPoll = await pool.query('SELECT * FROM polls WHERE poll LIKE ?', ['%' +query.filtrar+ '%']);
         console.log("LiP:",listPoll);
         if (listPoll.length<=0) {
@@ -22,14 +20,24 @@ router.get('/',async(req,res)=>{
             console.log("LiP numero:",listPoll);
             
         }
-    }
-    if (0 < listPoll.length){
-        data = paginator(listPoll, req.query.pagina, 3, "/", "");
+        if (0 < listPoll.length){
+            data = paginator(listPoll, req.query.pagina, 3, "", "");
+           
+        }else{
+            data = {
+                pagi_info: "No hay datos que mostrar",
+              };
+        }
+      
     }else{
+        listPoll = 0;
         data = {
-            pagi_info: "No hay datos que mostrar",
+            pagi_info: "No se encontraron coinicidencias",
           };
+    
+       
     }
+    
     res.render('index/index', { data });
 });
 router.get('/slider',async(req,res)=>{
@@ -37,26 +45,52 @@ router.get('/slider',async(req,res)=>{
 
 
 });
-router.get('/slider',async(req,res)=>{
+router.get('/slider2',async(req,res)=>{
     res.render('partials/slider2');
 
 
 });
-router.get('/slider',async(req,res)=>{
+router.get('/slider3',async(req,res)=>{
     res.render('partials/slider3');
 
 
 });
-router.get('/slider',async(req,res)=>{
+router.get('/slider4',async(req,res)=>{
     res.render('partials/slider4');
 
 
 });
-router.get('/slider',async(req,res)=>{
+router.get('/slider5',async(req,res)=>{
     res.render('partials/slider5');
 
 
+
 });
+router.get('/slider6',async(req,res)=>{
+    res.render('partials/slider6');
+
+
+
+});
+router.get('/slider7',async(req,res)=>{
+    res.render('partials/slider7');
+
+
+
+});
+router.get('/slider8',async(req,res)=>{
+    res.render('partials/slider8');
+
+
+});
+router.get('/sliderSugerencia',async(req,res)=>{
+    res.render('partials/sliderSugerencia');
+
+
+
+});
+
+
 router.get('/confir', async (req, res) => {
     //codificar.codificar(polls);
     const polls={
@@ -85,5 +119,10 @@ async function codificar(polls) {
      return kde;
 
 }
+router.get('/about',async(req,res)=>{
+    res.render('partials/about');
+
+
+});
 module.exports = router;
 

@@ -19,13 +19,11 @@ pool.connect((err) => {
                 console.error('Database connection was refused.');
                 break;
             default:
-                console.log('Defaullt SWITCH');
                 console.log(err.code);
-                console.log(err);
                 break;
         }
     } else {
-        console.log('DB is Connected');
+        console.log('***BASE DE DATOS conectada exitosamente***');
     }
 
     return;

@@ -34,9 +34,19 @@
                 </div>
                 <div class="card-body">
                     <p class="m-2">{{responses}}: respuestas</p>
-                    <a class="btn btn-success" href="/details?id={{id}}">
-                        Compartir encuesta
-                    </a>
+
+                    <form action="/listPoll" method="POST" >
+                        {{#if estado_poll}}
+                            
+                            <button class="btn btn-warning" value="{{id}}" name="cerrar" id="{{id}}" type="submit" >Cerrar encuesta</button>
+                        {{else}}
+                           
+                            <button class="btn btn-info" value="{{id}}" name="cerrar" id="{{id}}" type="submit">Habilitar encuesta</button>
+                        {{/if}}
+                        
+                        
+                    </form>
+                    
                     <a class="btn btn-info" href="/details?id={{id}}">
                         Detalles
                     </a>

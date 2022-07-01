@@ -1,14 +1,22 @@
 <body id="fondo">
-    
-</body>
-<style> 
-    #fondo{
-        background-image: url("https://cdn.pixabay.com/photo/2015/08/26/07/03/background-908172_960_720.jpg");
-		background-repeat: no-repeat;
-		background-size: cover;
-		background-position: center;
-		background-attachment: fixed;
 
+</body>
+<style>
+    #fondo {
+        background-image: url("https://cdn.pixabay.com/photo/2015/08/26/07/03/background-908172_960_720.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+
+    }
+    #etiqueta{
+        display: block;
+        
+        
+    }
+    #grafico{
+        display: none;
     }
 </style>
 <div class="container" id="fondo">
@@ -23,61 +31,160 @@
                         <div class="row">
                             <p>{{data.responses}}</p>
                             &nbsp;
-                            <p>opciones</p>
+                            <p>Respuestas</p>
                         </div>
+                        <ul class="row" id="etiqueta">
+                            {{#each responses}}
+
+                            <li <!--class="list-group-item list-group-item-action list-group-item-light"-->{{this}}</li>
+                            {{/each}}
+                        </ul>
+
+
                         <div class="row">
-                            <p id="votoss">{{votes}}</p>
-                           
-                            &nbsp;
-                            <p>votos</p>
-                        </div>
-                        <div class="row">
+                            {{#if data.estado_poll}}
                             <a class="btn btn-info"
                                 href="/votes?id={{data.id}}&poll={{data.poll}}&multiple={{multiple}}">
                                 Realizar votos
                             </a>
+                            {{else}}
+                                <h3 class="alert alert-danger" role="alert">Encuesta cerrada</h3>
+                                <!--Peliculas:Pregunta Nº1-->
+                                {{#if_id data.id 7}}
+                                <div class="alert alert-info" role="alert">
+                                    <h3>La respuesta es: </h3><h2><bold>Matrix</bold></h2>
+                                </div>
+                                {{/if_id}}
+                                <!--Peliculas:Pregunta Nº2-->
+                                {{#if_id data.id 8}}
+                                <div class="alert alert-info" role="alert">
+                                    <h3>La respuesta es: </h3><h2><bold>El Secreto de Sus Ojos</bold></h2>
+                                </div>
+                                {{/if_id}}
+                                <!--El Nacimiento de Venus-->
+                                {{#if_id data.id 9}}
+                                <div class="alert alert-info" role="alert">
+                                    <h3>La respuesta es: </h3><h2><bold>El Nacimiento de Venus</bold></h2>
+                                </div>
+                                {{/if_id}}
+                                <!--guemes-->
+                                {{#if_id data.id 12}}
+                                <div class="alert alert-info" role="alert">
+                                    <h3>La respuesta es: </h3><h2><bold>Martin Miguel de Guemes</bold></h2>
+                                </div>
+                                {{/if_id}}
+                                <!--Cruce de los Andes-->
+                                {{#if_id data.id 13}}
+                                <div class="alert alert-info" role="alert">
+                                    <h3>La respuesta es: </h3><h2><bold>21 dias</bold></h2>
+                                </div>
+                                {{/if_id}}
+                                <!--Revolucion -francesa-->
+                                {{#if_id data.id 16}}
+                                <div class="alert alert-info" role="alert">
+                                    <h3>La respuesta es: </h3><h2><bold>El Iluminismo</bold></h2>
+                                </div>
+                                {{/if_id}}
+                                <!--Flauta-->
+                                {{#if_id data.id 17}}
+                                <div class="alert alert-info" role="alert">
+                                    <h3>La respuesta es: </h3><h2><bold>Viento</bold></h2>
+                                </div>
+                                {{/if_id}}
+                                <!--trap-->
+                                {{#if_id data.id 18}}
+                                <div class="alert alert-info" role="alert">
+                                    <h3>La respuesta es: </h3><h2><bold>Trap</bold></h2>
+                                </div>
+                                {{/if_id}}
+                                <!--tango-->
+                                {{#if_id data.id 20}}
+                                <div class="alert alert-info" role="alert">
+                                    <h3>La respuesta es: </h3><h2><bold>Afroamericano</bold></h2>
+                                </div>
+                                {{/if_id}}
+                                <!--Portugal-->
+                                {{#if_id data.id 21}}
+                                <div class="alert alert-info" role="alert">
+                                    <h3>La respuesta es: </h3><h2><bold>Portugal</bold></h2>
+                                </div>
+                                {{/if_id}}
+                                <!--Rio Amazonas-->
+                                {{#if_id data.id 22}}
+                                <div class="alert alert-info" role="alert">
+                                    <h3>La respuesta es: </h3><h2><bold>El Amazonas</bold></h2>
+                                </div>
+                                {{/if_id}}
+                                <!--China-->
+                                {{#if_id data.id 23}}
+                                <div class="alert alert-info" role="alert">
+                                    <h3>La respuesta es: </h3><h2><bold>China</bold></h2>
+                                </div>
+                                {{/if_id}}
+                                <!--Ballena Franca Austral-->
+                                {{#if_id data.id 24}}
+                                <div class="alert alert-info" role="alert">
+                                    <h3>La respuesta es: </h3><h2><bold>Ballena Franca Austral</bold></h2>
+                                </div>
+                                {{/if_id}}
+                                <!--Ruiseñor-->
+                                {{#if_id data.id 25}}
+                                <div class="alert alert-info" role="alert">
+                                    <h3>La respuesta es: </h3><h2><bold>Ruiseñor</bold></h2>
+                                </div>
+                                {{/if_id}}
+                               
+                            {{/if}}
+                           
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-sm">
+            
+            
             <div class="card">
-                    <button onclick="ocultar('top_x_div')">Grafico Histograma</button>
-            </div>
-            <div class="card">
+                <button onclick="ocultar('top_x_div')" class="btn btn-info">Grafico Histograma</button >
                 <div class="card-body" id="top_x_div" style="width: 500px; height: 300px; display_none">
+                    
                 </div>
             </div>
             <div class="card">
-                <button onclick="ocultar('piechart_3d')">Grafico de Torta 3D</button>
+                <button onclick="ocultar('piechart_3d')" class="btn btn-info">Grafico de Torta 3D</button>
                 <div id="piechart_3d" style="width: 500px; height: 300px; display: none"></div>
             </div>
             <div class="card">
-                <button onclick="ocultar('donutchart')">Grafico de dona</button>
+                <button onclick="ocultar('donutchart')" class="btn btn-info">Grafico de dona</button>
                 <div id="donutchart" style="width: 500px; height: 300px;display: none"></div>
             </div>
+            <script>
+               
+
+            </script>
         </div>
     </div>
 
 </div>
- {{!-- <script src="/socket.io/socket.io.js"></script> --}}
+{{!--
+<script src="/socket.io/socket.io.js"></script> --}}
 <script>
     //let socket =io()
     //console.log("En votes: ", {{votes}})
     //socket.emit('votook', 'alguien esta por votar');
-    
+
 </script>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-{{!-- <script src="socket.io/socket.io.js"></script> --}}
+{{!--
+<script src="socket.io/socket.io.js"></script> --}}
 <script type="text/javascript">
     google.charts.load('current', { 'packages': ['bar'] });
     google.charts.setOnLoadCallback(drawStuff);
-    google.charts.load('current', { 'packages': ['corechart'] });
+    /*google.charts.load('current', { 'packages': ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
     google.charts.load("current", { "packages": ["corechart"] });
-    google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawChart);*/
     //Histograma
     function drawStuff() {
         let responses = "{{responses}}";

@@ -1,4 +1,4 @@
-var campos_max = 10;   //max de 10 campos
+var campos_max = 11;   //max de 10 campos
 var x = 2;
 $('#add_field').click(
     function (e){
