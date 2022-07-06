@@ -50,7 +50,7 @@
                             <input  type="submit" value="Votar" id="form1" class="btn btn-success btn-block">
                         {{else}}
                             <!--<input type="text" class="form-control" placeholder="Ingrese">-->
-                            {{!-- <input type="submit" value="Votar" id="sevoto" class="btn btn-success btn-block" disabled> --}}
+                            <input type="submit" value="Votar" id="form1" class="btn btn-success btn-block">
                         {{/if}}
                     </div>
                 </form>
@@ -80,6 +80,10 @@
 
             }
             })
+        
+        socket.on('connect', function(){
+        console.log('connected');
+         });
 
     </script>
 </div>
