@@ -83,6 +83,26 @@ router.get('/slider8',async(req,res)=>{
 
 
 });
+router.get('/slider9',async(req,res)=>{
+    res.render('partials/slider9');
+
+
+});
+router.get('/slider10',async(req,res)=>{
+    res.render('partials/slider10');
+
+
+});
+router.get('/slider11',async(req,res)=>{
+    res.render('partials/slider11');
+
+
+});
+router.get('/slider12',async(req,res)=>{
+    res.render('partials/slider12');
+
+
+});
 router.get('/sliderSugerencia',async(req,res)=>{
     res.render('partials/sliderSugerencia');
 
