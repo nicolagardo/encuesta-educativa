@@ -184,7 +184,7 @@ router.get('/details', async (req, res) => {
   console.log("responses: ", responses);
   console.log('====================================');  
 
-  console.log("valor: ",listPoll[0]);
+  //console.log("valor: ",listPoll[0]);
   var data = listPoll[0];
   // console.log('====================================');
   // console.log(data);

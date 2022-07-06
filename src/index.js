@@ -55,9 +55,12 @@ io.on('connection', socket => {
     console.log('====================================');
     console.log("Usuarios conectados: ",socketCount);
     console.log('====================================');
+    console.log('socket.client.conn.remoteAddress', socket.client.conn.remoteAddress);
+    console.log('socket.request.connection.remoteAddress', socket.request.connection.remoteAddress);
+    console.log('socket.handshake.address', socket.handshake.address);
   });
 
-    
+
 
 
 
