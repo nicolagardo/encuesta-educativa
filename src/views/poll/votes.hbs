@@ -46,11 +46,11 @@
                     <br>
                     <div id="form1" class="form-group">
                         <script>console.log("MM value: ",{{votes}})</script>
-                        {{#if value }}
-                            <input  type="submit" value="Votar" id="form1" class="btn btn-success btn-block">
+                        {{#if cukie.rememberme}}
+                            <input type="submit" value="Votar" id="form1" class="btn btn-success btn-block" disabled>
                         {{else}}
                             <!--<input type="text" class="form-control" placeholder="Ingrese">-->
-                            <input type="submit" value="Votar" id="form1" class="btn btn-success btn-block">
+                            <input type="submit" value="Votar" id="form1" class="btn btn-success btn-block" >
                         {{/if}}
                     </div>
                 </form>

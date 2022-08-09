@@ -5,6 +5,7 @@ const pool = require('../connection');
 const { paginator } = require('../lib/paginator');
 const { check, validationResult, body } = require('express-validator');
 var url = require('url');
+const { json } = require('express/lib/response');
 //const io = require("socket.io-client");
 
 router.get('/listPoll', async (req, res) => {
@@ -211,14 +212,17 @@ router.get('/votes', async (req, res) => {
   if (0 < inscription.length) {
     value = true;
   }
+  const cukie = res.cookie('name', 'ins', { domain: 'localhost', path: '/', secure: true });
+  res.cookie('rememberme', false, { expires: new Date(Date.now() + 900000), httpOnly: true });
   //console.log(responses);
   poll = query.poll;
   if (multiple == 1) {
-    res.render('poll/multiplechoice', { responses, poll, value, multiple });
+    res.render('poll/multiplechoice', { responses, poll, value, multiple, cukie });
   } else {
-    res.render('poll/votes', { responses, poll, value, multiple });
+    res.render('poll/votes', { responses, poll, value, multiple, cukie });
   }
-
+  
+ 
 
 });
 router.post('/votes', [
@@ -391,7 +395,7 @@ async function cargarMultiple(respuesta, userid) {
         });
       }
       let res = {
-        poll_id: poll_id,
+        poll_id: poll_id,get
         //user_id: userid,
         response: respon,
         response_id: response_id,
