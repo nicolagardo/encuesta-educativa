@@ -1,0 +1,55 @@
+<body id="fondo">
+    
+</body>
+<style> 
+    #fondo{
+        background-image: url("https://cdn.pixabay.com/photo/2015/08/26/07/03/background-908172_960_720.jpg");
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
+		background-attachment: fixed;
+
+    }
+</style>
+<div class="container p-4" id="fondo">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card text-center">
+                <img src="/images/image/iconoLogo.png" class="mx-auto w-25">
+                <div class="card-header">
+                    <h3>Cambiar contraseña</h3>
+                    <p>Ingrese una nueva contraseña</p>
+                </div>
+                <div class="card-body">
+                    {{#if errors }}
+                     <div class="alert alert-danger" role="alert">
+                        A simple danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+                    </div>
+                    {{#each errors }}
+                    <p class="alert alert-danger">{{ this.msg }}</p>
+                    {{/each}}
+                    {{/if}}
+                    <form action="/signin" method="POST" class="needs-validation" novalidate>
+                       
+                        <div class="form-group">
+                            <input type="password" name="password" value="" placeholder="Contraseña" class="form-control pass1" required>
+                        </div>
+                        <div class="form-group" >
+                            <input type="password" name="repeat_password" value="{{data.password}}" placeholder="Repetir Contraseña" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">
+                                Enviar
+                            </button>
+                            {{!-- {{#if}}
+                                <p>
+                                    Se ha enviado un código al email para seguir con la recuperación
+                                </p>
+                            {{/if}} --}}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
