@@ -3,6 +3,12 @@ const passport = require('passport');
 const router = express.Router();
 const { check, validationResult, body } = require('express-validator');
 const {isNotLoggedIn} = require('../lib/auth');
+const jwt  = require('jsonwebtoken');
+const pool = require('../connection');
+
+const urlNewPassword = process.env.URL_DEV
+const jwtSecret = process.env.JWTSECRET
+
 
 // NOTE: Crear usuario
 
@@ -73,16 +79,21 @@ router.post('/signin', [
 
 // NOTE: Cambiar contraseña
 
-router.get('/reset-email', (req, res) => {
-    res.render('auth/reset-email');
-});
+// router.get('/reset-email', (req, res) => {
+//     res.render('auth/reset-email');
+// });
 
-router.patch('/reset-email', [
-    check('password').not().isEmpty().withMessage('Password es requerido')
-    .isArray({ min: 6, max: 10 } )   
-],(req, res,next) =>{
-   
+router.put('/forgot', [
+    check('email').not().isEmpty().withMessage('Email es requeido')
+    .isEmail().withMessage('Email no encontrado')  
+], async (req, res,next) =>{
+    console.log('hola');
     const errors = validationResult(req);
+    let verificationLink;
+    const emailStatus = 'OK';
+
+    const { email } = req.body
+
     if (!errors.isEmpty()) {
        
         res.render('/signin', {data:req.body, errors:  errors.array() });
@@ -90,39 +101,102 @@ router.patch('/reset-email', [
         res.render(errors.array())
     //    next(); 
     }
-},passport.authenticate('local.signin', {
-    successRedirect: '/signin',
-    failureRedirect: '/signin',
+    try {
+        user = await  pool.query('SELECT * FROM user WHERE email LIKE ?', ['%' +email+ '%']);
+        // INFO: userId: user.id, userName: user.username
+        const token = jwt.sign('hola', jwtSecret, {expiresIn: '10m'});
+        console.log(token);
+        verificationLink = `http://${urlNewPassword}/${token}`;
+        console.log('====================================');
+        console.log(verificationLink);
+        console.log('====================================');
+        user.resetToken = token;
+        
+    } catch (error) {
+        return res.json(`Ha ocurrido un error: ${error}`); 
+    }
     
-}));
+    // TODO: Enviar Email
+    try {
+        //
+    } catch (error) {
+        emailStatus = error;
+        return res.status(400).json( {message: ' Algo salió mal en el envio del email'})
+    }
 
+    try {
+        await pool.query(`UPDATE set ${user}`)
+    } catch (error) {
+        emailStatus = error;
+        return res.status(400).json({message: 'Algo salió mal'} );
+    }
+    res.json( { message, info: emailStatus });
+
+
+}
+// ,passport.authenticate('local.signin', {
+//     successRedirect: '/signin',
+//     failureRedirect: '/signin',
+    
+// })
+);
+
+// NOTE: Crear nueva contraseña
+
+router.get('/new-password', (req, res) => {
+    res.render('auth/new-password');
+});
+
+router.patch('new-password', async (req, resp) => {
+    const  { newPassword } = req.body;
+    const resetToken = req.header.reset;
+    
+    if(!(resetToken && newPassword)) {
+        res.status(400).json( {message: 'Todos los campos son requeridos'} );
+    }
+
+    const userRepo = pool.query('SELECT * ')
+    let jwtPayload;
+    let user;
+
+    try {
+        jwtPayload = jwt.verify(resetToken, con)
+    } catch (error) {
+       return res.status(401).json( {message: 'Algo salio mal con el cambio de password '}) 
+    }
+})
 
 
 
 // NOTE: Recuperar contreseña
 
 router.get('/forgot', (req, res) => {
+    
+    // const token = jwt.sign({userId: user.id, userName: user.username}, jwtSecret, {expiresIn: '10m'});
+    // console.log('====================================');
+    // console.log(token);
+    // console.log('====================================');
     res.render('auth/forgot');
 });
 
-router.patch('/forgot', [
-    check('email').not().isEmpty().withMessage('Email es requeido')
-    .isEmail().withMessage('Email no encontrado')
-],(req, res,next) =>{
+// router.patch('/forgot', [
+//     check('email').not().isEmpty().withMessage('Email es requeido')
+//     .isEmail().withMessage('Email no encontrado')
+// ],(req, res,next) =>{
    
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
        
-        res.render('/signin', {data:req.body, errors:  errors.array() });
-    }else{
-        res.render(errors.array())
-    //    next(); 
-    }
-},passport.authenticate('local.signin', {
-    successRedirect: '/signin',
-    failureRedirect: '/signin',
+//         res.render('/signin', {data:req.body, errors:  errors.array() });
+//     }else{
+//         res.render(errors.array())
+//     //    next(); 
+//     }
+// },passport.authenticate('local.signin', {
+//     successRedirect: '/signin',
+//     failureRedirect: '/signin',
     
-}));
+// }));
 
 
 // NOTE: Cerrar Sesió
